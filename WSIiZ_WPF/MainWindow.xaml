@@ -8,6 +8,11 @@
         Title="MainWindow" Height="450" Width="800"
         Loaded="Window_Loaded">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
         <TreeView x:Name="FolderTreeView">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}">
@@ -21,5 +26,16 @@
                 </Style>
             </TreeView.Resources>
         </TreeView>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Width="100" Height="20" Click="DeleteTreeItemButton_Click">Usuń</Button>
+            <StackPanel>
+                <Button Width="100" Height="20" Click="AddTreeItemButton_Click">Dodaj</Button>
+                <TextBox x:Name="newTreeItemName"/>
+            </StackPanel>
+            <StackPanel>
+                <Button Width="100" Height="20" Click="UpdateTreeItemButton_Click">Aktualizuj</Button>
+                <TextBox x:Name="updateTreeItemName"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

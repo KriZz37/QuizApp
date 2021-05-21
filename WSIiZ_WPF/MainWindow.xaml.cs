@@ -49,5 +49,35 @@ namespace WSIiZ_WPF
             FolderTreeView.Items.Add(item3);
 
         }
+
+        private void DeleteTreeItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            FolderTreeView.Items.Remove(FolderTreeView.SelectedItem);
+            FolderTreeView.Items.Refresh();
+        }
+
+        private void AddTreeItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FolderTreeView.SelectedItem is not TreeViewItem selectedItem)
+            {
+                FolderTreeView.Items.Add(newTreeItemName.Text);
+            }
+            else
+            {
+                selectedItem.Items.Add(
+                    new TreeViewItem
+                    {
+                        Header = newTreeItemName.Text
+                    });
+            }
+
+            FolderTreeView.Items.Refresh();
+        }
+
+        private void UpdateTreeItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            var item = FolderTreeView.SelectedItem as TreeViewItem;
+            item.Header = updateTreeItemName.Text;
+        }
     }
 }
