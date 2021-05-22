@@ -47,37 +47,63 @@ namespace WSIiZ_WPF
             item2.Items.Add(item21);
             FolderTreeView.Items.Add(item2);
             FolderTreeView.Items.Add(item3);
-
         }
 
-        private void DeleteTreeItemButton_Click(object sender, RoutedEventArgs e)
-        {
-            FolderTreeView.Items.Remove(FolderTreeView.SelectedItem);
-            FolderTreeView.Items.Refresh();
-        }
-
-        private void AddTreeItemButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (FolderTreeView.SelectedItem is not TreeViewItem selectedItem)
-            {
-                FolderTreeView.Items.Add(newTreeItemName.Text);
-            }
-            else
-            {
-                selectedItem.Items.Add(
-                    new TreeViewItem
-                    {
-                        Header = newTreeItemName.Text
-                    });
-            }
-
-            FolderTreeView.Items.Refresh();
-        }
-
-        private void UpdateTreeItemButton_Click(object sender, RoutedEventArgs e)
+        private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
         {
             var item = FolderTreeView.SelectedItem as TreeViewItem;
-            item.Header = updateTreeItemName.Text;
+            var itemIsRoot = item.Parent is not TreeViewItem;
+
+            if (itemIsRoot)
+                FolderTreeView.Items.Remove(item);
+            else
+            {
+                var itemParent = item.Parent as TreeViewItem;
+                itemParent.Items.Remove(item);
+            }
+
+            FolderTreeView.Items.Refresh();
+        }
+
+        private void AddTreeItem_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var itemName = newTreeItemName.Text;
+
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                MessageBox.Show("Nazwa nie może być pusta");
+                return;
+            }
+
+            if (FolderTreeView.SelectedItem is not TreeViewItem selectedItemParent)
+                FolderTreeView.Items.Add(new TreeViewItem{Header = itemName});
+            else
+                selectedItemParent.Items.Add(new TreeViewItem { Header = itemName });
+
+            newTreeItemName.Text = string.Empty;
+            FolderTreeView.Items.Refresh();
+        }
+
+        private void UpdateTreeItem_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var newItemName = updateTreeItemName.Text;
+
+            if (string.IsNullOrWhiteSpace(newItemName))
+            {
+                MessageBox.Show("Nazwa nie może być pusta");
+                return;
+            }
+
+            var selectedItem = FolderTreeView.SelectedItem as TreeViewItem;
+            selectedItem.Header = newItemName;
+
+            updateTreeItemName.Text = string.Empty;
+        }
+
+        private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (FolderTreeView.SelectedItem is TreeViewItem item)
+                item.IsSelected = false;
         }
     }
 }
