@@ -9,11 +9,22 @@
         Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <TreeView x:Name="FolderTreeView" MouseDown="DeselectItem_TreeView_MouseDown">
+        <StackPanel Orientation="Horizontal">
+            <Button Width="100" Height="20" Click="DeleteTreeItem_Button_Click">Usuń</Button>
+            <StackPanel>
+                <Button Width="100" Height="20" Click="AddTreeItem_Button_Click">Dodaj</Button>
+                <TextBox x:Name="newTreeItemName"/>
+            </StackPanel>
+            <StackPanel>
+                <Button Width="100" Height="20" Click="UpdateTreeItem_Button_Click">Aktualizuj</Button>
+                <TextBox x:Name="updateTreeItemName"/>
+            </StackPanel>
+        </StackPanel>
+        <TreeView x:Name="FolderTreeView" MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="HeaderTemplate">
@@ -26,16 +37,5 @@
                 </Style>
             </TreeView.Resources>
         </TreeView>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button Width="100" Height="20" Click="DeleteTreeItem_Button_Click">Usuń</Button>
-            <StackPanel>
-                <Button Width="100" Height="20" Click="AddTreeItem_Button_Click">Dodaj</Button>
-                <TextBox x:Name="newTreeItemName"/>
-            </StackPanel>
-            <StackPanel>
-                <Button Width="100" Height="20" Click="UpdateTreeItem_Button_Click">Aktualizuj</Button>
-                <TextBox x:Name="updateTreeItemName"/>
-            </StackPanel>
-        </StackPanel>
     </Grid>
 </Window>

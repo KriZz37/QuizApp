@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WSIiZ_WPF.Data;
 
 namespace WSIiZ_WPF
 {
@@ -20,8 +22,11 @@ namespace WSIiZ_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly DataContext _dataContext;
+        public MainWindow(DataContext dataContext)
         {
+            _dataContext = dataContext;
+
             InitializeComponent();
         }
 
@@ -47,6 +52,17 @@ namespace WSIiZ_WPF
             item2.Items.Add(item21);
             FolderTreeView.Items.Add(item2);
             FolderTreeView.Items.Add(item3);
+
+            // Creates a db file if doesn't exist
+            _dataContext.Database.EnsureCreated();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            // Clean up database connections
+            _dataContext.Dispose();
         }
 
         private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
