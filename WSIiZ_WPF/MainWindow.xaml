@@ -20,8 +20,8 @@
                 <TextBox x:Name="newTreeItemName"/>
             </StackPanel>
             <StackPanel>
-                <Button Width="100" Height="20" Click="UpdateTreeItem_Button_Click">Aktualizuj</Button>
-                <TextBox x:Name="updateTreeItemName"/>
+                <Button Width="100" Height="20" Click="ChangeTreeItemName_Button_Click">Zmień nazwę</Button>
+                <TextBox x:Name="changeTreeItemName"/>
             </StackPanel>
         </StackPanel>
         <TreeView x:Name="FolderTreeView" MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1">

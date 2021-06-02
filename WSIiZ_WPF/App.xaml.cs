@@ -18,8 +18,8 @@ namespace WSIiZ_WPF
     /// </summary>
     public partial class App : Application
     {
-        public IServiceProvider ServiceProvider { get; private set; }
-        public IConfiguration Configuration { get; private set; }
+        private IServiceProvider _serviceProvider;
+        private IConfiguration _configuration;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -27,21 +27,21 @@ namespace WSIiZ_WPF
                 .SetBasePath(Environment.CurrentDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            Configuration = builder.Build();
+            _configuration = builder.Build();
 
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
-            ServiceProvider = serviceCollection.BuildServiceProvider();
+            _serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("SQLite")));
+                options.UseSqlite(_configuration.GetConnectionString("SQLite")));
 
             services.AddTransient(typeof(MainWindow));
         }

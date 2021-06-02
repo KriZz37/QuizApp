@@ -100,9 +100,9 @@ namespace WSIiZ_WPF
             FolderTreeView.Items.Refresh();
         }
 
-        private void UpdateTreeItem_Button_Click(object sender, RoutedEventArgs e)
+        private void ChangeTreeItemName_Button_Click(object sender, RoutedEventArgs e)
         {
-            var newItemName = updateTreeItemName.Text;
+            var newItemName = changeTreeItemName.Text;
 
             if (string.IsNullOrWhiteSpace(newItemName))
             {
@@ -113,7 +113,7 @@ namespace WSIiZ_WPF
             var selectedItem = FolderTreeView.SelectedItem as TreeViewItem;
             selectedItem.Header = newItemName;
 
-            updateTreeItemName.Text = string.Empty;
+            changeTreeItemName.Text = string.Empty;
         }
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
