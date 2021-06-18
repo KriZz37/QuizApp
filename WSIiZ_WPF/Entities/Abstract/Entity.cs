@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WSIiZ_WPF.Entities
 {
-    public  class Entity
+    public abstract class Entity
     {
         public long Id { get; set; }
     }

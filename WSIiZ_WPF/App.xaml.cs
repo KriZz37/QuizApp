@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using WSIiZ_WPF.Data;
+using WSIiZ_WPF.Services;
 
 namespace WSIiZ_WPF
 {
@@ -44,6 +45,8 @@ namespace WSIiZ_WPF
                 options.UseSqlite(_configuration.GetConnectionString("SQLite")));
 
             services.AddTransient(typeof(MainWindow));
+            services.AddTransient(typeof(TreeService));
+            services.AddTransient(typeof(DataService));
         }
     }
 }
