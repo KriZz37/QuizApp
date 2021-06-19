@@ -18,7 +18,7 @@ namespace WSIiZ_WPF.Services
             _dataContext = dataContext;
         }
 
-        public void ChangeTitle<TEntity>(TEntity entity, string newTitle) where TEntity : class, IHasTitle
+        public void ChangeTitle(IHasTitle entity, string newTitle)
         {
             entity.Title = newTitle;
             SaveChanges();

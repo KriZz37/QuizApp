@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WSIiZ_WPF.Data;
+using WSIiZ_WPF.Entities;
+using WSIiZ_WPF.Services;
 
 namespace WSIiZ_WPF
 {
@@ -22,47 +26,34 @@ namespace WSIiZ_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly DataContext _dataContext;
-        public MainWindow(DataContext dataContext)
+        private readonly DataService _dataService;
+        private readonly TreeService _treeService;
+        public MainWindow(
+            DataService dataService,
+            TreeService treeService)
         {
-            _dataContext = dataContext;
+            _dataService = dataService;
+            _treeService = treeService;
 
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Dummy data
-            var item1 = new TreeViewItem { Header = "1" };
-            var item11 = new TreeViewItem { Header = "1.1" };
-            var item111 = new TreeViewItem { Header = "1.1.1" };
-            var item112 = new TreeViewItem { Header = "1.1.2" };
-            var item1121 = new TreeViewItem { Header = "1.1.2.1" };
-            var item12 = new TreeViewItem { Header = "1.2" };
-            var item2 = new TreeViewItem { Header = "2" };
-            var item21 = new TreeViewItem { Header = "2.1" };
-            var item3 = new TreeViewItem { Header = "3" };
+            _dataService.EnsureDbCreated();
+            BuildTree();
+        }
 
-            item112.Items.Add(item1121);
-            item11.Items.Add(item112);
-            item11.Items.Add(item111);
-            item1.Items.Add(item11);
-            item1.Items.Add(item12);
-            FolderTreeView.Items.Add(item1);
-            item2.Items.Add(item21);
-            FolderTreeView.Items.Add(item2);
-            FolderTreeView.Items.Add(item3);
-
-            // Creates a db file if doesn't exist
-            _dataContext.Database.EnsureCreated();
+        private void BuildTree()
+        {
+            var rootFolders = _treeService.GetRootFolders();
+            FolderTreeView.Items.Add(rootFolders);
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-
-            // Clean up database connections
-            _dataContext.Dispose();
+            _dataService.Dispose();
         }
 
         private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
@@ -92,7 +83,7 @@ namespace WSIiZ_WPF
             }
 
             if (FolderTreeView.SelectedItem is not TreeViewItem selectedItemParent)
-                FolderTreeView.Items.Add(new TreeViewItem{Header = itemName});
+                FolderTreeView.Items.Add(new TreeViewItem { Header = itemName });
             else
                 selectedItemParent.Items.Add(new TreeViewItem { Header = itemName });
 
@@ -118,8 +109,17 @@ namespace WSIiZ_WPF
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (FolderTreeView.SelectedItem is TreeViewItem item)
-                item.IsSelected = false;
+            if (FolderTreeView.SelectedItem is not null)
+            {
+                // Use tag, because tree items aren't TreeVievItems
+                var selectedTVI = FolderTreeView.Tag as TreeViewItem;
+                selectedTVI.IsSelected = false;
+            }
+        }
+
+        private void AddTag_TreeView_Selected(object sender, RoutedEventArgs e)
+        {
+            FolderTreeView.Tag = e.OriginalSource;
         }
     }
 }
