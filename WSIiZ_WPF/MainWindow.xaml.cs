@@ -46,8 +46,15 @@ namespace WSIiZ_WPF
 
         private void BuildTree()
         {
+            // Clear existing items when it's a refresh
+            FolderTreeView.Items.Clear();
+
             var rootFolders = _treeService.GetRootFolders();
-            FolderTreeView.Items.Add(rootFolders);
+
+            foreach (var folder in rootFolders)
+            {
+                FolderTreeView.Items.Add(folder);
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -58,53 +65,45 @@ namespace WSIiZ_WPF
 
         private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
         {
-            var item = FolderTreeView.SelectedItem as TreeViewItem;
-            var itemIsRoot = item.Parent is not TreeViewItem;
+            var messageBoxResult = MessageBox.Show("Czy na pewno chcesz usunąć?\n" +
+                "Jeśli to folder, to zostaną usunięte wszystkie pliki wewnątrz!", "Potwierdź usunięcie",
+                MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
-            if (itemIsRoot)
-                FolderTreeView.Items.Remove(item);
-            else
+            if (messageBoxResult == MessageBoxResult.Cancel)
+                return;
+
+            var selectedItem = GetSelectedTreeItem();
+            if (selectedItem is not null)
             {
-                var itemParent = item.Parent as TreeViewItem;
-                itemParent.Items.Remove(item);
+                _treeService.DeleteItem(selectedItem);
+                BuildTree();
             }
-
-            FolderTreeView.Items.Refresh();
         }
 
         private void AddTreeItem_Button_Click(object sender, RoutedEventArgs e)
         {
             var itemName = newTreeItemName.Text;
 
-            if (string.IsNullOrWhiteSpace(itemName))
-            {
-                MessageBox.Show("Nazwa nie może być pusta");
+            if (!NameIsValid(itemName))
                 return;
-            }
 
-            if (FolderTreeView.SelectedItem is not TreeViewItem selectedItemParent)
-                FolderTreeView.Items.Add(new TreeViewItem { Header = itemName });
-            else
-                selectedItemParent.Items.Add(new TreeViewItem { Header = itemName });
-
+            var selectedItem = GetSelectedTreeItem();
+            _treeService.AddTreeItem(selectedItem, itemName);
             newTreeItemName.Text = string.Empty;
-            FolderTreeView.Items.Refresh();
+            BuildTree();
         }
 
         private void ChangeTreeItemName_Button_Click(object sender, RoutedEventArgs e)
         {
             var newItemName = changeTreeItemName.Text;
 
-            if (string.IsNullOrWhiteSpace(newItemName))
-            {
-                MessageBox.Show("Nazwa nie może być pusta");
+            if (!NameIsValid(newItemName))
                 return;
-            }
 
-            var selectedItem = FolderTreeView.SelectedItem as TreeViewItem;
-            selectedItem.Header = newItemName;
-
+            var selectedItem = GetSelectedTreeItem();
+            _treeService.ChangeTitle(selectedItem, newItemName);
             changeTreeItemName.Text = string.Empty;
+            BuildTree();
         }
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
@@ -120,6 +119,23 @@ namespace WSIiZ_WPF
         private void AddTag_TreeView_Selected(object sender, RoutedEventArgs e)
         {
             FolderTreeView.Tag = e.OriginalSource;
+        }
+
+        private bool NameIsValid(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Nazwa nie może być pusta");
+                return false;
+            }
+
+            return true;
+        }
+
+        // TODO: interface/abstract
+        private Folder GetSelectedTreeItem()
+        {
+            return FolderTreeView.SelectedItem as Folder;
         }
     }
 }

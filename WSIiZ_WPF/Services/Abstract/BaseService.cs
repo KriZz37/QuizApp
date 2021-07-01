@@ -18,12 +18,6 @@ namespace WSIiZ_WPF.Services
             _dataContext = dataContext;
         }
 
-        public void ChangeTitle(IHasTitle entity, string newTitle)
-        {
-            entity.Title = newTitle;
-            SaveChanges();
-        }
-
         protected void SaveChanges()
         {
             _dataContext.SaveChanges();
