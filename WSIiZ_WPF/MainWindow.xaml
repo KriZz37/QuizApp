@@ -17,20 +17,28 @@
         <StackPanel Orientation="Horizontal">
             <Button Width="100" Height="20" Click="DeleteTreeItem_Button_Click">Usuń</Button>
             <StackPanel>
-                <Button Width="100" Height="20" Click="AddTreeItem_Button_Click">Dodaj</Button>
-                <TextBox x:Name="newTreeItemName"/>
+                <Button Width="100" Height="20" Click="AddTreeFolder_Button_Click">Dodaj folder</Button>
+                <TextBox x:Name="newTreeFolderName"/>
+            </StackPanel>
+            <StackPanel>
+                <Button Width="100" Height="20" Click="AddExam_Button_Click">Dodaj egzamin</Button>
+                <TextBox x:Name="newExamName"/>
             </StackPanel>
             <StackPanel>
                 <Button Width="100" Height="20" Click="ChangeTreeItemName_Button_Click">Zmień nazwę</Button>
                 <TextBox x:Name="changeTreeItemName"/>
             </StackPanel>
         </StackPanel>
-        <TreeView x:Name="FolderTreeView" MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1" TreeViewItem.Selected="AddTag_TreeView_Selected">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding Subfolders}">
+        <TreeView x:Name="FolderTreeView" MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1" 
+                  TreeViewItem.Selected="AddTag_TreeView_Selected">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding SubfoldersWithExams}">
                     <TextBlock Text="{Binding Title}"/>
                 </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
+                <DataTemplate DataType="{x:Type entities:Exam}">
+                    <TextBlock Foreground="Red" Text="{Binding Title}" />
+                </DataTemplate>
+            </TreeView.Resources>
         </TreeView>
     </Grid>
 </Window>

@@ -14,5 +14,11 @@ namespace WSIiZ_WPF.Entities
         public Folder Parent { get; set; }
         public List<Folder> Subfolders { get; set; } = new();
         public List<Exam> Exams { get; set; } = new();
+
+        // Displays the tree
+        public IEnumerable<IHasTitle> SubfoldersWithExams
+        {
+            get => Subfolders.Concat<IHasTitle>(Exams);
+        }
     }
 }
