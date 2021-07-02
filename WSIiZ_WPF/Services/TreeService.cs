@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,10 @@ using WSIiZ_WPF.Interfaces;
 
 namespace WSIiZ_WPF.Services
 {
+    /// <summary>
+    /// Responsible for operations performed in MainWindow TreeView
+    /// to the database (folders and exams)
+    /// </summary>
     public class TreeService : BaseService
     {
         public TreeService(DataContext dataContext) : base(dataContext) { }
@@ -17,6 +22,7 @@ namespace WSIiZ_WPF.Services
         {
             // Get whole tree
             return _dataContext.Folders
+                .Include(x => x.Exams)
                 .AsEnumerable()
                 .Where(x => x.Parent == null)
                 .ToList();
@@ -28,9 +34,9 @@ namespace WSIiZ_WPF.Services
             SaveChanges();
         }
 
-        public void AddTreeItem(Folder selectedItem, string itemName)
+        public void AddTreeFolder(Folder selectedFolder, string itemName)
         {
-            if (selectedItem is null)
+            if (selectedFolder is null)
             {
                 _dataContext.Folders.Add(
                     new Folder
@@ -41,10 +47,10 @@ namespace WSIiZ_WPF.Services
             }
             else
             {
-                selectedItem.Subfolders.Add(
+                selectedFolder.Subfolders.Add(
                     new Folder
                     {
-                        Parent = selectedItem,
+                        Parent = selectedFolder,
                         Title = itemName
                     });
             }
@@ -52,12 +58,29 @@ namespace WSIiZ_WPF.Services
             SaveChanges();
         }
 
-        // TODO: interface/abstract
-        public void DeleteItem(Folder selectedItem)
+        public void AddExam(Folder selectedItem, string name)
         {
-            var subfolders = FlattenSubfolders(selectedItem);
-            _dataContext.RemoveRange(subfolders);
-            _dataContext.Remove(selectedItem);
+            _dataContext.Exams.Add(
+                new Exam
+                {
+                    Title = name,
+                    Folder = selectedItem
+                });
+
+            SaveChanges();
+        }
+
+        public void DeleteItem(IRemovable selectedItem)
+        {
+            if (selectedItem is Folder folder)
+            {
+                var folders = FlattenSubfolders(folder);
+                _dataContext.RemoveRange(folders);
+            }
+
+            if (selectedItem is Exam)
+                _dataContext.Remove(selectedItem);
+
             SaveChanges();
         }
 

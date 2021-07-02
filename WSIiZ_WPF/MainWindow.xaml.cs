@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WSIiZ_WPF.Data;
 using WSIiZ_WPF.Entities;
+using WSIiZ_WPF.Interfaces;
 using WSIiZ_WPF.Services;
 
 namespace WSIiZ_WPF
@@ -65,42 +66,62 @@ namespace WSIiZ_WPF
 
         private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (FolderTreeView.SelectedItem is not IRemovable selectedItem)
+            {
+                MessageBox.Show("Wybierz element, który chcesz usunąć", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             var messageBoxResult = MessageBox.Show("Czy na pewno chcesz usunąć?\n" +
                 "Jeśli to folder, to zostaną usunięte wszystkie pliki wewnątrz!", "Potwierdź usunięcie",
                 MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
-            if (messageBoxResult == MessageBoxResult.Cancel)
-                return;
+            if (messageBoxResult == MessageBoxResult.Cancel) return;
 
-            var selectedItem = GetSelectedTreeItem();
-            if (selectedItem is not null)
-            {
-                _treeService.DeleteItem(selectedItem);
-                BuildTree();
-            }
+            _treeService.DeleteItem(selectedItem);
+            BuildTree();
         }
 
-        private void AddTreeItem_Button_Click(object sender, RoutedEventArgs e)
+        private void AddTreeFolder_Button_Click(object sender, RoutedEventArgs e)
         {
-            var itemName = newTreeItemName.Text;
+            var folderName = newTreeFolderName.Text;
+            if (!NameIsValid(folderName)) return;
 
-            if (!NameIsValid(itemName))
+            var selectedItem = FolderTreeView.SelectedItem as Folder;
+            _treeService.AddTreeFolder(selectedItem, folderName);
+            newTreeFolderName.Text = string.Empty;
+            BuildTree();
+        }
+
+        private void AddExam_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var examName = newExamName.Text;
+            if (!NameIsValid(examName)) return;
+
+            var selectedItem = FolderTreeView.SelectedItem as Folder;
+
+            if (selectedItem is not Folder)
+            {
+                MessageBox.Show("Egzamin musi być dodany do folderu", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
+            }
 
-            var selectedItem = GetSelectedTreeItem();
-            _treeService.AddTreeItem(selectedItem, itemName);
-            newTreeItemName.Text = string.Empty;
+            _treeService.AddExam(selectedItem, examName);
+            newExamName.Text = string.Empty;
             BuildTree();
         }
 
         private void ChangeTreeItemName_Button_Click(object sender, RoutedEventArgs e)
         {
             var newItemName = changeTreeItemName.Text;
+            if (!NameIsValid(newItemName)) return;
 
-            if (!NameIsValid(newItemName))
+            if (FolderTreeView.SelectedItem is not IHasTitle selectedItem)
+            {
+                MessageBox.Show("Wybierz element, któremu chcesz zmienić nazwę", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
+            }
 
-            var selectedItem = GetSelectedTreeItem();
             _treeService.ChangeTitle(selectedItem, newItemName);
             changeTreeItemName.Text = string.Empty;
             BuildTree();
@@ -130,12 +151,6 @@ namespace WSIiZ_WPF
             }
 
             return true;
-        }
-
-        // TODO: interface/abstract
-        private Folder GetSelectedTreeItem()
-        {
-            return FolderTreeView.SelectedItem as Folder;
         }
     }
 }

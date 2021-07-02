@@ -7,7 +7,7 @@ using WSIiZ_WPF.Interfaces;
 
 namespace WSIiZ_WPF.Entities
 {
-    public class Folder : Entity, IHasTitle
+    public class Folder : Entity, IHasTitle, IRemovable
     {
         public string Title { get; set; }
         public long? ParentId { get; set; }
