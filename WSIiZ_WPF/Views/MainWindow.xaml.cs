@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,7 +19,7 @@ using WSIiZ_WPF.Entities;
 using WSIiZ_WPF.Interfaces;
 using WSIiZ_WPF.Services;
 
-namespace WSIiZ_WPF
+namespace WSIiZ_WPF.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -29,13 +28,16 @@ namespace WSIiZ_WPF
     {
         private readonly DataService _dataService;
         private readonly TreeService _treeService;
+        private readonly WindowNavigationService _windowNavigationService;
+
         public MainWindow(
             DataService dataService,
-            TreeService treeService)
+            TreeService treeService,
+            WindowNavigationService navigationService)
         {
             _dataService = dataService;
             _treeService = treeService;
-
+            _windowNavigationService = navigationService;
             InitializeComponent();
         }
 
@@ -125,6 +127,12 @@ namespace WSIiZ_WPF
             _treeService.ChangeTitle(selectedItem, newItemName);
             changeTreeItemName.Text = string.Empty;
             BuildTree();
+        }
+
+        private void OpenExamDesign_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var exam = (e.OriginalSource as TextBlock).DataContext as Exam;
+            _windowNavigationService.ShowWindow<ExamDesignWindow>(exam);
         }
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)

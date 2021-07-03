@@ -1,4 +1,4 @@
-﻿<Window x:Class="WSIiZ_WPF.MainWindow"
+﻿<Window x:Class="WSIiZ_WPF.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -36,7 +36,9 @@
                     <TextBlock Text="{Binding Title}"/>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type entities:Exam}">
-                    <TextBlock Foreground="Red" Text="{Binding Title}" />
+                    <ContentControl MouseDoubleClick="OpenExamDesign_TextBlock_MouseDoubleClick">
+                        <TextBlock Foreground="Red" Text="{Binding Title}"/>
+                    </ContentControl>
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>

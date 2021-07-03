@@ -7,10 +7,10 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using WSIiZ_WPF.Data;
 using WSIiZ_WPF.Services;
+using WSIiZ_WPF.Views;
 
 namespace WSIiZ_WPF
 {
@@ -19,8 +19,8 @@ namespace WSIiZ_WPF
     /// </summary>
     public partial class App : Application
     {
-        private IServiceProvider _serviceProvider;
-        private IConfiguration _configuration;
+        public IServiceProvider ServiceProvider { get; private set; }
+        public IConfiguration Configuration { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -28,25 +28,30 @@ namespace WSIiZ_WPF
                 .SetBasePath(Environment.CurrentDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            _configuration = builder.Build();
+            Configuration = builder.Build();
 
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
-            _serviceProvider = serviceCollection.BuildServiceProvider();
+            ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            var navigationService = ServiceProvider.GetRequiredService<WindowNavigationService>();
+            navigationService.ShowWindow<MainWindow>();
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlite(_configuration.GetConnectionString("SQLite")));
+                options.UseSqlite(Configuration.GetConnectionString("SQLite")));
 
-            services.AddTransient(typeof(MainWindow));
-            services.AddTransient(typeof(TreeService));
-            services.AddTransient(typeof(DataService));
+            services.AddScoped<WindowNavigationService>();
+
+            services.AddTransient<MainWindow>();
+            services.AddTransient<ExamDesignWindow>();
+                                 
+            services.AddTransient<TreeService>();
+            services.AddTransient<DataService>();
+            services.AddTransient<ExaminationService>();
         }
     }
 }
