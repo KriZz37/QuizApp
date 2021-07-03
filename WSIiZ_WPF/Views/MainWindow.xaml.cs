@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WSIiZ_WPF.Data;
 using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Interfaces;
+using WSIiZ_WPF.Entities.Interfaces;
 using WSIiZ_WPF.Services;
 
 namespace WSIiZ_WPF.Views
@@ -47,28 +47,9 @@ namespace WSIiZ_WPF.Views
             BuildTree();
         }
 
-        private void BuildTree()
-        {
-            // Clear existing items when it's a refresh
-            FolderTreeView.Items.Clear();
-
-            var rootFolders = _treeService.GetRootFolders();
-
-            foreach (var folder in rootFolders)
-            {
-                FolderTreeView.Items.Add(folder);
-            }
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            _dataService.Dispose();
-        }
-
         private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (FolderTreeView.SelectedItem is not IRemovable selectedItem)
+            if (FolderTreeView.SelectedItem is not ITreeItem selectedItem)
             {
                 MessageBox.Show("Wybierz element, który chcesz usunąć", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -89,8 +70,8 @@ namespace WSIiZ_WPF.Views
             var folderName = newTreeFolderName.Text;
             if (!NameIsValid(folderName)) return;
 
-            var selectedItem = FolderTreeView.SelectedItem as Folder;
-            _treeService.AddTreeFolder(selectedItem, folderName);
+            var selectedFolder = FolderTreeView.SelectedItem as Folder;
+            _treeService.AddFolder(selectedFolder, folderName);
             newTreeFolderName.Text = string.Empty;
             BuildTree();
         }
@@ -100,15 +81,15 @@ namespace WSIiZ_WPF.Views
             var examName = newExamName.Text;
             if (!NameIsValid(examName)) return;
 
-            var selectedItem = FolderTreeView.SelectedItem as Folder;
+            var selectedFolder = FolderTreeView.SelectedItem as Folder;
 
-            if (selectedItem is not Folder)
+            if (selectedFolder is not Folder)
             {
                 MessageBox.Show("Egzamin musi być dodany do folderu", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            _treeService.AddExam(selectedItem, examName);
+            _treeService.AddExam(selectedFolder, examName);
             newExamName.Text = string.Empty;
             BuildTree();
         }
@@ -118,7 +99,7 @@ namespace WSIiZ_WPF.Views
             var newItemName = changeTreeItemName.Text;
             if (!NameIsValid(newItemName)) return;
 
-            if (FolderTreeView.SelectedItem is not IHasTitle selectedItem)
+            if (FolderTreeView.SelectedItem is not ITreeItem selectedItem)
             {
                 MessageBox.Show("Wybierz element, któremu chcesz zmienić nazwę", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -134,6 +115,9 @@ namespace WSIiZ_WPF.Views
             var exam = (e.OriginalSource as TextBlock).DataContext as Exam;
             _windowNavigationService.ShowWindow<ExamDesignWindow>(exam);
         }
+
+        // TODO: Przenoszenie folderów/egzaminów
+        // TODO: Zwijanie po wykonaniu akcji na drzewie
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -159,6 +143,25 @@ namespace WSIiZ_WPF.Views
             }
 
             return true;
+        }
+
+        private void BuildTree()
+        {
+            // Clear existing items when it's a refresh
+            FolderTreeView.Items.Clear();
+
+            var rootFolders = _treeService.GetRootFolders();
+
+            foreach (var folder in rootFolders)
+            {
+                FolderTreeView.Items.Add(folder);
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            _dataService.Dispose();
         }
     }
 }

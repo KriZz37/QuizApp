@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using WSIiZ_WPF.Data;
 using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Interfaces;
+using WSIiZ_WPF.Entities.Interfaces;
 
 namespace WSIiZ_WPF.Services
 {
@@ -17,7 +17,7 @@ namespace WSIiZ_WPF.Services
     {
         public TreeService(DataContext dataContext) : base(dataContext) { }
 
-        public List<Folder> GetRootFolders()
+        public IEnumerable<Folder> GetRootFolders()
         {
             // Get whole tree
             return _dataContext.Folders
@@ -27,13 +27,13 @@ namespace WSIiZ_WPF.Services
                 .ToList();
         }
 
-        public void ChangeTitle(IHasTitle entity, string newTitle)
+        public void ChangeTitle(ITreeItem entity, string newTitle)
         {
             entity.Title = newTitle;
             SaveChanges();
         }
 
-        public void AddTreeFolder(Folder selectedFolder, string itemName)
+        public void AddFolder(Folder selectedFolder, string itemName)
         {
             if (selectedFolder is null)
             {
@@ -69,11 +69,12 @@ namespace WSIiZ_WPF.Services
             SaveChanges();
         }
 
-        public void DeleteItem(IRemovable selectedItem)
+        public void DeleteItem(ITreeItem selectedItem)
         {
             if (selectedItem is Folder folder)
             {
                 var folders = FlattenSubfolders(folder);
+                // It also deletes exams (cascade delete)
                 _dataContext.RemoveRange(folders);
             }
 

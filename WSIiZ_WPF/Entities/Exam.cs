@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WSIiZ_WPF.Interfaces;
+using WSIiZ_WPF.Entities.Interfaces;
 
 namespace WSIiZ_WPF.Entities
 {
-    public class Exam : Entity, IHasTitle, IRemovable
+    public class Exam : Entity, ITreeItem
     {
         public string Title { get; set; }
         public Folder Folder { get; set; }

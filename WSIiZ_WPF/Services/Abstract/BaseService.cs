@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WSIiZ_WPF.Data;
-using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Interfaces;
 
 namespace WSIiZ_WPF.Services
 {
+    /// <summary>
+    /// Contains methods used only by derived services
+    /// </summary>
     public abstract class BaseService
     {
         protected readonly DataContext _dataContext;
