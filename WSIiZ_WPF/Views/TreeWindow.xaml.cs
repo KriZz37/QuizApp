@@ -22,28 +22,21 @@ using WSIiZ_WPF.Services;
 namespace WSIiZ_WPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TreeWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TreeWindow : Window
     {
-        private readonly DataService _dataService;
         private readonly TreeService _treeService;
-        private readonly WindowNavigationService _windowNavigationService;
+        private readonly ServiceGenerator _serviceGenerator;
 
-        public MainWindow(
-            DataService dataService,
+        public TreeWindow(
             TreeService treeService,
-            WindowNavigationService navigationService)
+            ServiceGenerator serviceGenerator)
         {
-            _dataService = dataService;
             _treeService = treeService;
-            _windowNavigationService = navigationService;
-            InitializeComponent();
-        }
+            _serviceGenerator = serviceGenerator;
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            _dataService.EnsureDbCreated();
+            InitializeComponent();
             BuildTree();
         }
 
@@ -113,7 +106,7 @@ namespace WSIiZ_WPF.Views
         private void OpenExamDesign_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var exam = (e.OriginalSource as TextBlock).DataContext as Exam;
-            _windowNavigationService.ShowWindow<ExamDesignWindow>(exam);
+            _serviceGenerator.ShowWindow<ExamDesignWindow>(exam);
         }
 
         // TODO: Przenoszenie folderów/egzaminów
@@ -156,12 +149,6 @@ namespace WSIiZ_WPF.Views
             {
                 FolderTreeView.Items.Add(folder);
             }
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            _dataService.Dispose();
         }
     }
 }

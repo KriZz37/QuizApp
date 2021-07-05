@@ -10,7 +10,7 @@ using WSIiZ_WPF.Entities.Interfaces;
 namespace WSIiZ_WPF.Services
 {
     /// <summary>
-    /// Responsible for operations performed in MainWindow TreeView
+    /// Responsible for operations performed in TreeWindow TreeView
     /// to the database (folders and exams)
     /// </summary>
     public class TreeService : BaseService
@@ -22,6 +22,7 @@ namespace WSIiZ_WPF.Services
             // Get whole tree
             return _dataContext.Folders
                 .Include(x => x.Exams)
+                .ThenInclude(x => x.Questions)
                 .AsEnumerable()
                 .Where(x => x.Parent == null)
                 .ToList();
