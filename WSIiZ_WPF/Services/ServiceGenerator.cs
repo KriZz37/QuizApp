@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using WSIiZ_WPF.ViewModels;
 
 namespace WSIiZ_WPF.Services
 {
@@ -12,11 +13,11 @@ namespace WSIiZ_WPF.Services
         void Activate(object paramater);
     }
 
-    public class WindowNavigationService
+    public class ServiceGenerator
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public WindowNavigationService(IServiceProvider serviceProvider)
+        public ServiceGenerator(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -31,6 +32,18 @@ namespace WSIiZ_WPF.Services
             }
 
             window.Show();
+        }
+
+        public TViewModel CreateViewModel<TViewModel>(object paramter = null) where TViewModel : BaseViewModel
+        {
+            var vm = _serviceProvider.GetRequiredService<TViewModel>();
+
+            if (vm is IActivable activableVM)
+            {
+                activableVM.Activate(paramter);
+            }
+
+            return vm;
         }
     }
 }
