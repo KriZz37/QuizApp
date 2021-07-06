@@ -53,6 +53,7 @@ namespace WSIiZ_WPF
             services.AddTransient<TreeWindow>();
             services.AddTransient<ExamDesignWindow>();
 
+            services.AddTransient<TreeViewModel>();
             services.AddTransient<ExamDesignViewModel>();
                                  
             services.AddTransient<TreeService>();

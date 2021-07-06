@@ -14,22 +14,26 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-            <Button Width="100" Height="20" Click="DeleteTreeItem_Button_Click">Usuń</Button>
+            <Button Width="100" Height="20" Command="{Binding DeleteTreeItemCmd}">Usuń</Button>
             <StackPanel>
-                <Button Width="100" Height="20" Click="AddTreeFolder_Button_Click">Dodaj folder</Button>
-                <TextBox x:Name="newTreeFolderName"/>
+                <Button Width="100" Height="20" Command="{Binding AddTreeFolderCmd}">Dodaj folder</Button>
+                <TextBox Text="{Binding NewFolderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel>
-                <Button Width="100" Height="20" Click="AddExam_Button_Click">Dodaj egzamin</Button>
-                <TextBox x:Name="newExamName"/>
+                <Button Width="100" Height="20" Command="{Binding AddExamCmd}">Dodaj egzamin</Button>
+                <TextBox Text="{Binding NewExamName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel>
-                <Button Width="100" Height="20" Click="ChangeTreeItemName_Button_Click">Zmień nazwę</Button>
-                <TextBox x:Name="changeTreeItemName"/>
+                <Button Width="100" Height="20" Command="{Binding ChangeTreeItemNameCmd}">Zmień nazwę</Button>
+                <TextBox Text="{Binding TreeItemNameToChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
-        <TreeView x:Name="FolderTreeView" MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1" 
-                  TreeViewItem.Selected="AddTag_TreeView_Selected">
+        <!--Name="FolderTreeView"-->
+        <TreeView Name="FolderTreeView"
+                  ItemsSource="{Binding TreeFolders}"
+                  MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1" 
+                  TreeViewItem.Selected="AddTag_TreeView_Selected"
+                  SelectedItemChanged="TreeView_SelectedItemChanged">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding SubfoldersWithExams}">
                     <TextBlock Text="{Binding Title}"/>

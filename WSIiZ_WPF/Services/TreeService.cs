@@ -17,7 +17,7 @@ namespace WSIiZ_WPF.Services
     {
         public TreeService(DataContext dataContext) : base(dataContext) { }
 
-        public IEnumerable<Folder> GetRootFolders()
+        public List<Folder> GetRootFolders()
         {
             // Get whole tree
             return _dataContext.Folders

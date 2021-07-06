@@ -26,15 +26,15 @@ namespace WSIiZ_WPF.ViewModels
         public void Activate(object paramater)
         {
             _exam = paramater as Exam;
-            Questions = new ObservableCollection<Question>(_exam.Questions);
+            Questions = new List<Question>(_exam.Questions);
         }
 
         // Commands
         public ICommand AddQuestionCmd { get; set; }
 
         // View properties
-        private ObservableCollection<Question> _questions;
-        public ObservableCollection<Question> Questions
+        private List<Question> _questions;
+        public List<Question> Questions
         {
             get => _questions;
             set => OnPropertyChanged(ref _questions, value);
@@ -48,7 +48,7 @@ namespace WSIiZ_WPF.ViewModels
         }
 
         // Command methods
-        public void AddQuestion()
+        private void AddQuestion()
         {
             //TODO: QuestionName name validation
 

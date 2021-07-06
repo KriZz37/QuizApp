@@ -19,6 +19,7 @@ using WSIiZ_WPF.Entities;
 using WSIiZ_WPF.Entities.Interfaces;
 using WSIiZ_WPF.Utilities;
 using WSIiZ_WPF.Services;
+using WSIiZ_WPF.ViewModels;
 
 namespace WSIiZ_WPF.Views
 {
@@ -27,81 +28,18 @@ namespace WSIiZ_WPF.Views
     /// </summary>
     public partial class TreeWindow : Window
     {
-        private readonly TreeService _treeService;
+        private readonly TreeViewModel _treeViewModel;
         private readonly ServiceGenerator _serviceGenerator;
 
         public TreeWindow(
-            TreeService treeService,
+            TreeViewModel treeViewModel,
             ServiceGenerator serviceGenerator)
         {
-            _treeService = treeService;
+            _treeViewModel = treeViewModel;
             _serviceGenerator = serviceGenerator;
 
+            DataContext = _treeViewModel;
             InitializeComponent();
-            BuildTree();
-        }
-
-        private void DeleteTreeItem_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (FolderTreeView.SelectedItem is not ITreeItem selectedItem)
-            {
-                MessageBox.Show("Wybierz element, który chcesz usunąć", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var messageBoxResult = MessageBox.Show("Czy na pewno chcesz usunąć?\n" +
-                "Jeśli to folder, to zostaną usunięte wszystkie pliki wewnątrz!", "Potwierdź usunięcie",
-                MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-
-            if (messageBoxResult == MessageBoxResult.Cancel) return;
-
-            _treeService.DeleteItem(selectedItem);
-            BuildTree();
-        }
-
-        private void AddTreeFolder_Button_Click(object sender, RoutedEventArgs e)
-        {
-            var folderName = newTreeFolderName.Text;
-            if (!NameIsValid(folderName)) return;
-
-            var selectedFolder = FolderTreeView.SelectedItem as Folder;
-            _treeService.AddFolder(selectedFolder, folderName);
-            newTreeFolderName.Text = string.Empty;
-            BuildTree();
-        }
-
-        private void AddExam_Button_Click(object sender, RoutedEventArgs e)
-        {
-            var examName = newExamName.Text;
-            if (!NameIsValid(examName)) return;
-
-            var selectedFolder = FolderTreeView.SelectedItem as Folder;
-
-            if (selectedFolder is not Folder)
-            {
-                MessageBox.Show("Egzamin musi być dodany do folderu", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            _treeService.AddExam(selectedFolder, examName);
-            newExamName.Text = string.Empty;
-            BuildTree();
-        }
-
-        private void ChangeTreeItemName_Button_Click(object sender, RoutedEventArgs e)
-        {
-            var newItemName = changeTreeItemName.Text;
-            if (!NameIsValid(newItemName)) return;
-
-            if (FolderTreeView.SelectedItem is not ITreeItem selectedItem)
-            {
-                MessageBox.Show("Wybierz element, któremu chcesz zmienić nazwę", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            _treeService.ChangeTitle(selectedItem, newItemName);
-            changeTreeItemName.Text = string.Empty;
-            BuildTree();
         }
 
         private void OpenExamDesign_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -109,9 +47,6 @@ namespace WSIiZ_WPF.Views
             var exam = (e.OriginalSource as TextBlock).DataContext as Exam;
             _serviceGenerator.ShowWindow<ExamDesignWindow>(exam);
         }
-
-        // TODO: Przenoszenie folderów/egzaminów
-        // TODO: Zwijanie po wykonaniu akcji na drzewie
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -128,28 +63,9 @@ namespace WSIiZ_WPF.Views
             FolderTreeView.Tag = e.OriginalSource;
         }
 
-        private bool NameIsValid(string name)
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                MessageBox.Show("Nazwa nie może być pusta");
-                return false;
-            }
-
-            return true;
-        }
-
-        private void BuildTree()
-        {
-            // Clear existing items when it's a refresh
-            FolderTreeView.Items.Clear();
-
-            var rootFolders = _treeService.GetRootFolders();
-
-            foreach (var folder in rootFolders)
-            {
-                FolderTreeView.Items.Add(folder);
-            }
+            _treeViewModel.SelectedItem = e.NewValue as ITreeItem;
         }
     }
 }

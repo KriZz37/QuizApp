@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WSIiZ_WPF.ViewModels
 {
@@ -24,6 +25,17 @@ namespace WSIiZ_WPF.ViewModels
 
             backingField = value;
             OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected bool NameIsValid(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Nazwa nie może być pusta");
+                return false;
+            }
+
             return true;
         }
     }

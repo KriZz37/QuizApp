@@ -13,7 +13,7 @@ namespace WSIiZ_WPF.Services
     {
         public ExaminationService(DataContext dataContext) : base(dataContext) { }
 
-        public ObservableCollection<Question> AddQuestion(Exam exam, string title)
+        public List<Question> AddQuestion(Exam exam, string title)
         {
             _dataContext.Questions.Add(
                 new Question
@@ -27,10 +27,9 @@ namespace WSIiZ_WPF.Services
             return GetQuestions(exam);
         }
 
-        private ObservableCollection<Question> GetQuestions(Exam exam)
+        private List<Question> GetQuestions(Exam exam)
         {
-            var questions = _dataContext.Questions.Where(x => x.Exam == exam);
-            return new ObservableCollection<Question>(questions);
+            return _dataContext.Questions.Where(x => x.Exam == exam).ToList();
         }
     }
 }
