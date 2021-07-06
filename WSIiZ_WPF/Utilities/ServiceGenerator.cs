@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows;
 using WSIiZ_WPF.ViewModels;
 
-namespace WSIiZ_WPF.Services
+namespace WSIiZ_WPF.Utilities
 {
     public interface IActivable
     {

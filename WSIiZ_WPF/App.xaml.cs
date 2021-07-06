@@ -12,6 +12,7 @@ using WSIiZ_WPF.Data;
 using WSIiZ_WPF.Services;
 using WSIiZ_WPF.ViewModels;
 using WSIiZ_WPF.Views;
+using WSIiZ_WPF.Utilities;
 
 namespace WSIiZ_WPF
 {

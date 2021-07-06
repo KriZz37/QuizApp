@@ -7,19 +7,31 @@
         xmlns:entities="clr-namespace:WSIiZ_WPF.Entities"
         mc:Ignorable="d"
         Title="ExamDesignWindow" Height="450" Width="800">
-
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Nazwa egzaminu: "/>
-                <TextBlock Text="{Binding Title}"/>
+                <TextBlock Text="{Binding Exam.Title}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="W folderze: "/>
-                <TextBlock Text="{Binding Folder.Title}"/>
+                <TextBlock Text="{Binding Exam.Folder.Title}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <TextBox Width="200" Text="{Binding QuestionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}"/>
+            </StackPanel>
+            <StackPanel>
                 <TextBlock Text="Pytania: "/>
+                <ListBox ItemsSource="{Binding Questions}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </StackPanel>
     </Grid>

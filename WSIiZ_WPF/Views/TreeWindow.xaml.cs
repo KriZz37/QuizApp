@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using WSIiZ_WPF.Data;
 using WSIiZ_WPF.Entities;
 using WSIiZ_WPF.Entities.Interfaces;
+using WSIiZ_WPF.Utilities;
 using WSIiZ_WPF.Services;
 
 namespace WSIiZ_WPF.Views

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WSIiZ_WPF.Entities;
 using WSIiZ_WPF.Services;
+using WSIiZ_WPF.Utilities;
+using WSIiZ_WPF.ViewModels;
 
 namespace WSIiZ_WPF.Views
 {
@@ -21,17 +25,22 @@ namespace WSIiZ_WPF.Views
     /// </summary>
     public partial class ExamDesignWindow : Window, IActivable
     {
-        private readonly ExaminationService _examinationService;
+        private ExamDesignViewModel _examDesignViewModel;
+        private readonly ServiceGenerator _serviceGenerator;
 
-        public ExamDesignWindow(ExaminationService examinationService)
+        public ExamDesignWindow(ServiceGenerator serviceGenerator)
         {
-            _examinationService = examinationService;
+            _serviceGenerator = serviceGenerator;
+
             InitializeComponent();
         }
 
         public void Activate(object paramater)
         {
-            DataContext = paramater as Exam;
+            var exam = paramater as Exam;
+            _examDesignViewModel = _serviceGenerator.CreateViewModel<ExamDesignViewModel>(exam);
+
+            DataContext = _examDesignViewModel;
         }
     }
 }
