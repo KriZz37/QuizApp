@@ -42,6 +42,7 @@ namespace WSIiZ_WPF.Views
             InitializeComponent();
         }
 
+        //TODO: Move methods below to ViewModel
         private void OpenExamDesign_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var exam = (e.OriginalSource as TextBlock).DataContext as Exam;

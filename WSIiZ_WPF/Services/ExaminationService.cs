@@ -13,7 +13,7 @@ namespace WSIiZ_WPF.Services
     {
         public ExaminationService(DataContext dataContext) : base(dataContext) { }
 
-        public List<Question> AddQuestion(Exam exam, string title)
+        public void AddQuestion(Exam exam, string title)
         {
             _dataContext.Questions.Add(
                 new Question
@@ -23,13 +23,29 @@ namespace WSIiZ_WPF.Services
                 });
 
             SaveChanges();
-
-            return GetQuestions(exam);
         }
 
-        private List<Question> GetQuestions(Exam exam)
+        public List<Question> GetQuestions(Exam exam)
         {
             return _dataContext.Questions.Where(x => x.Exam == exam).ToList();
+        }
+
+        public void DeleteQuestion(Question question)
+        {
+            _dataContext.Questions.Remove(question);
+            SaveChanges();
+        }
+
+        public void AddAnswer(Question question, string answer)
+        {
+            _dataContext.Answers.Add(
+                new Answer
+                {
+                    Title = answer,
+                    Question = question
+                });
+
+            SaveChanges();
         }
     }
 }

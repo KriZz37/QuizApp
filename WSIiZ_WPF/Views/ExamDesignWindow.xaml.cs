@@ -42,5 +42,18 @@ namespace WSIiZ_WPF.Views
 
             DataContext = _examDesignViewModel;
         }
+
+        //TODO: Move methods below to ViewModel
+        private void DeleteQuestion(object sender, RoutedEventArgs e)
+        {
+            var question = (e.OriginalSource as Button).DataContext as Question;
+            _examDesignViewModel.DeleteQuestion(question);
+        }
+
+        private void AddAnswer(object sender, RoutedEventArgs e)
+        {
+            var question = (e.OriginalSource as Button).DataContext as Question;
+            _examDesignViewModel.AddAnswer(question);
+        }
     }
 }

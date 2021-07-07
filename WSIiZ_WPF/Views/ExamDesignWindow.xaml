@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSIiZ_WPF.Views"
-        xmlns:entities="clr-namespace:WSIiZ_WPF.Entities"
+        xmlns:utils="clr-namespace:WSIiZ_WPF.Utilities"
         mc:Ignorable="d"
         Title="ExamDesignWindow" Height="450" Width="800">
+    <Window.Resources>
+        <utils:MockData x:Key="MockData"/>
+    </Window.Resources>
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -22,16 +25,37 @@
                 <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}"/>
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="Pytania: "/>
-                <ListBox ItemsSource="{Binding Questions}">
-                    <ListBox.ItemTemplate>
+                <!-- Questions-->
+                <TextBlock Text="Pytania:"/>
+                <ItemsControl
+                    d:DataContext="{StaticResource MockData}"
+                    ItemsSource="{Binding Questions}">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Title}"/>
-                            </StackPanel>
+                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                                <StackPanel>
+                                    <DockPanel>
+                                        <TextBlock FontWeight="Bold" Text="{Binding Title}"/>
+                                        <Button Width="50" Content="Usuń" HorizontalAlignment="Right"
+                                                Click="DeleteQuestion"/>
+                                    </DockPanel>
+                                    <!-- Answer list-->
+                                    <ItemsControl ItemsSource="{Binding Answers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <DockPanel>
+                                                    <TextBlock Text="{Binding Title}"/>
+                                                    <Button Content="Usuń" Width="30" HorizontalAlignment="Right"/>
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Button Content="Dodaj odpowiedź" Click="AddAnswer"/>
+                                </StackPanel>
+                            </Border>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </StackPanel>
     </Grid>

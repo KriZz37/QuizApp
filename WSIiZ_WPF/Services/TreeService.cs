@@ -23,6 +23,7 @@ namespace WSIiZ_WPF.Services
             return _dataContext.Folders
                 .Include(x => x.Exams)
                 .ThenInclude(x => x.Questions)
+                .ThenInclude(x => x.Answers)
                 .AsEnumerable()
                 .Where(x => x.Parent == null)
                 .ToList();

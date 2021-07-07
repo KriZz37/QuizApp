@@ -13,7 +13,7 @@ namespace WSIiZ_WPF.ViewModels
 {
     public class ExamDesignViewModel : BaseViewModel, IActivable
     {
-        private Exam _exam;
+        public Exam Exam { get; set; }
         private readonly ExaminationService _examinationService;
 
         public ExamDesignViewModel(ExaminationService examinationService)
@@ -25,8 +25,8 @@ namespace WSIiZ_WPF.ViewModels
 
         public void Activate(object paramater)
         {
-            _exam = paramater as Exam;
-            Questions = new List<Question>(_exam.Questions);
+            Exam = paramater as Exam;
+            Questions = new List<Question>(Exam.Questions);
         }
 
         // Commands
@@ -50,10 +50,36 @@ namespace WSIiZ_WPF.ViewModels
         // Command methods
         private void AddQuestion()
         {
-            //TODO: QuestionName name validation
+            if (!NameIsValid(QuestionName)) return;
 
-            Questions = _examinationService.AddQuestion(_exam, QuestionName);
+            _examinationService.AddQuestion(Exam, QuestionName);
             QuestionName = string.Empty;
+            UpdateQuestions();
+        }
+
+        public void DeleteQuestion(Question question)
+        {
+            _examinationService.DeleteQuestion(question);
+            UpdateQuestions();
+        }
+
+        public void AddAnswer(Question question)
+        {
+            var dialog = new TextDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                var answer = dialog.ResponseText;
+                if (!NameIsValid(answer)) return;
+
+                _examinationService.AddAnswer(question, answer);
+            }
+
+            UpdateQuestions();
+        }
+
+        private void UpdateQuestions()
+        {
+            Questions = _examinationService.GetQuestions(Exam);
         }
     }
 }

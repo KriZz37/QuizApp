@@ -30,7 +30,7 @@ namespace WSIiZ_WPF.ViewModels
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+            _execute.Invoke(parameter);
         }
     }
 }
