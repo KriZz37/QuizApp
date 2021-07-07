@@ -37,20 +37,25 @@
                                     <DockPanel>
                                         <TextBlock FontWeight="Bold" Text="{Binding Title}"/>
                                         <Button Width="50" Content="Usuń" HorizontalAlignment="Right"
-                                                Click="DeleteQuestion"/>
+                                                Click="DeleteQuestion_Button_Click"/>
                                     </DockPanel>
-                                    <!-- Answer list-->
+                                    <!-- Answers-->
                                     <ItemsControl ItemsSource="{Binding Answers}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <DockPanel>
                                                     <TextBlock Text="{Binding Title}"/>
-                                                    <Button Content="Usuń" Width="30" HorizontalAlignment="Right"/>
+                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                                        <Button Content="Status" Width="40"
+                                                                Click="ToggleCorrectAnswer_Button_Click"/>
+                                                        <Button Content="Usuń" Width="35"
+                                                                Click="Delete_Answer_Button_Click"/>
+                                                    </StackPanel>
                                                 </DockPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <Button Content="Dodaj odpowiedź" Click="AddAnswer"/>
+                                    <Button Content="Dodaj odpowiedź" Click="AddAnswer_Button_Click"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

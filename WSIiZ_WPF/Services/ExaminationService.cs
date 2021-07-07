@@ -47,5 +47,17 @@ namespace WSIiZ_WPF.Services
 
             SaveChanges();
         }
+
+        public void DeleteAnswer(Answer answer)
+        {
+            _dataContext.Answers.Remove(answer);
+            SaveChanges();
+        }
+
+        public void ToggleCorrectAnswer(Answer answer)
+        {
+            answer.Question.CorrectAnswerId = answer.Id;
+            SaveChanges();
+        }
     }
 }

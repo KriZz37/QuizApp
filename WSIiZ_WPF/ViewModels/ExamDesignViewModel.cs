@@ -77,6 +77,18 @@ namespace WSIiZ_WPF.ViewModels
             UpdateQuestions();
         }
 
+        public void ToggleCorrectAnswer(Answer answer)
+        {
+            _examinationService.ToggleCorrectAnswer(answer);
+            UpdateQuestions();
+        }
+
+        public void DeleteAnswer(Answer answer)
+        {
+            _examinationService.DeleteAnswer(answer);
+            UpdateQuestions();
+        }
+
         private void UpdateQuestions()
         {
             Questions = _examinationService.GetQuestions(Exam);

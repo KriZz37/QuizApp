@@ -26,8 +26,12 @@ namespace WSIiZ_WPF.Data
                 .HasMany(x => x.Subfolders)
                 .WithOne(x => x.Parent);
 
+            // Ignore helpers
             modelBuilder.Entity<Folder>()
                 .Ignore(x => x.SubfoldersWithExams);
+
+            modelBuilder.Entity<Answer>()
+                .Ignore(x => x.IsCorrect);
         }
     }
 }

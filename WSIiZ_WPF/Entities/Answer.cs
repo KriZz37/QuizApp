@@ -12,5 +12,9 @@ namespace WSIiZ_WPF.Entities
         public string Title { get; set; }
         public Question Question { get; set; }
         public long QuestionId { get; set; }
+        public bool IsCorrect 
+        {
+            get => Question.CorrectAnswerId == Id;
+        }
     }
 }
