@@ -36,8 +36,12 @@
                                 <StackPanel>
                                     <DockPanel>
                                         <TextBlock FontWeight="Bold" Text="{Binding Title}"/>
-                                        <Button Width="50" Content="Usuń" HorizontalAlignment="Right"
+                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                            <Button Content="Zmień nazwę" Width="75"
+                                                    Click="ChangeTitle_Button_Click"/>
+                                            <Button Width="50" Content="Usuń" 
                                                 Click="DeleteQuestion_Button_Click"/>
+                                        </StackPanel>
                                     </DockPanel>
                                     <!-- Answers-->
                                     <ItemsControl ItemsSource="{Binding Answers}">
@@ -48,6 +52,8 @@
                                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                         <Button Content="Status" Width="40"
                                                                 Click="ToggleCorrectAnswer_Button_Click"/>
+                                                        <Button Content="Zmień nazwę" Width="75"
+                                                                Click="ChangeTitle_Button_Click"/>
                                                         <Button Content="Usuń" Width="35"
                                                                 Click="Delete_Answer_Button_Click"/>
                                                     </StackPanel>

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace WSIiZ_WPF.Entities.Interfaces
 {
-    public interface ITreeItem : IHasTitle
+    public interface IHasTitle
     {
+        string Title { get; set; }
     }
 }

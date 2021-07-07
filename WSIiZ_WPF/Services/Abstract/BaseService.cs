@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WSIiZ_WPF.Data;
+using WSIiZ_WPF.Entities.Interfaces;
 
 namespace WSIiZ_WPF.Services
 {
@@ -22,6 +23,12 @@ namespace WSIiZ_WPF.Services
         protected void SaveChanges()
         {
             _dataContext.SaveChanges();
+        }
+
+        public void ChangeTitle(IHasTitle entity, string newTitle)
+        {
+            entity.Title = newTitle;
+            SaveChanges();
         }
     }
 }

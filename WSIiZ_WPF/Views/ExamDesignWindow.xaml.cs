@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WSIiZ_WPF.Entities;
+using WSIiZ_WPF.Entities.Interfaces;
 using WSIiZ_WPF.Services;
 using WSIiZ_WPF.Utilities;
 using WSIiZ_WPF.ViewModels;
@@ -66,6 +67,12 @@ namespace WSIiZ_WPF.Views
         {
             var answer = (e.OriginalSource as Button).DataContext as Answer;
             _examDesignViewModel.DeleteAnswer(answer);
+        }
+
+        private void ChangeTitle_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var entity = (e.OriginalSource as Button).DataContext as IHasTitle;
+            _examDesignViewModel.ChangeTitle(entity);
         }
     }
 }

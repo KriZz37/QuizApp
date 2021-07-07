@@ -18,14 +18,11 @@ namespace WSIiZ_WPF.ViewModels
     public class TreeViewModel : BaseViewModel
     {
         private readonly TreeService _treeService;
-        private readonly ServiceGenerator _serviceGenerator;
 
         public TreeViewModel(
-            TreeService treeService,
-            ServiceGenerator serviceGenerator)
+            TreeService treeService)
         {
             _treeService = treeService;
-            _serviceGenerator = serviceGenerator;
 
             DeleteTreeItemCmd = new RelayCommand(c => DeleteTreeItem());
             AddTreeFolderCmd = new RelayCommand(c => AddTreeFolder());

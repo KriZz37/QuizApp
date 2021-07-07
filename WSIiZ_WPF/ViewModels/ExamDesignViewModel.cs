@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WSIiZ_WPF.Entities;
+using WSIiZ_WPF.Entities.Interfaces;
 using WSIiZ_WPF.Services;
 using WSIiZ_WPF.Utilities;
 
@@ -66,14 +67,12 @@ namespace WSIiZ_WPF.ViewModels
         public void AddAnswer(Question question)
         {
             var dialog = new TextDialog();
-            if (dialog.ShowDialog() == true)
-            {
-                var answer = dialog.ResponseText;
-                if (!NameIsValid(answer)) return;
+            if (dialog.ShowDialog() == false) return;
 
-                _examinationService.AddAnswer(question, answer);
-            }
+            var answer = dialog.ResponseText;
+            if (!NameIsValid(answer)) return;
 
+            _examinationService.AddAnswer(question, answer);
             UpdateQuestions();
         }
 
@@ -86,6 +85,18 @@ namespace WSIiZ_WPF.ViewModels
         public void DeleteAnswer(Answer answer)
         {
             _examinationService.DeleteAnswer(answer);
+            UpdateQuestions();
+        }
+
+        public void ChangeTitle(IHasTitle entity)
+        {
+            var dialog = new TextDialog();
+            if (dialog.ShowDialog() == false) return;
+
+            var newTitle = dialog.ResponseText;
+            if (!NameIsValid(newTitle)) return;
+
+            _examinationService.ChangeTitle(entity, newTitle);
             UpdateQuestions();
         }
 

@@ -7,7 +7,7 @@ using WSIiZ_WPF.Entities.Interfaces;
 
 namespace WSIiZ_WPF.Entities
 {
-    public class Question : Entity
+    public class Question : Entity, IHasTitle
     {
         public string Title { get; set; }
         public Exam Exam { get; set; }

@@ -32,8 +32,6 @@ namespace WSIiZ_WPF.Utilities
                         Answers = new List<Answer>
                         {
                             new Answer { Title = "answer 1" },
-                            new Answer { Title = "answer 2" },
-                            new Answer { Title = "answer 3" },
                             new Answer { Title = "answer 4" }
                         }
                     },
@@ -45,7 +43,6 @@ namespace WSIiZ_WPF.Utilities
                             new Answer { Title = "answer 1 answer 1" },
                             new Answer { Title = "answer 2 answer 2 answer 2 answer 2 answer 2 answer 2" },
                             new Answer { Title = "answer 3 answer 3" },
-                            new Answer { Title = "answer 4 answer 4" }
                         }
                     },
                 };

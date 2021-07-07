@@ -29,12 +29,6 @@ namespace WSIiZ_WPF.Services
                 .ToList();
         }
 
-        public void ChangeTitle(ITreeItem entity, string newTitle)
-        {
-            entity.Title = newTitle;
-            SaveChanges();
-        }
-
         public void AddFolder(Folder selectedFolder, string itemName)
         {
             if (selectedFolder is null)
