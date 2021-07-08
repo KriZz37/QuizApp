@@ -28,7 +28,6 @@
                 <TextBox Text="{Binding TreeItemNameToChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </StackPanel>
-        <!--Name="FolderTreeView"-->
         <TreeView Name="FolderTreeView"
                   ItemsSource="{Binding TreeFolders}"
                   MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1" 
@@ -39,7 +38,12 @@
                     <TextBlock Text="{Binding Title}"/>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type entities:Exam}">
-                    <ContentControl MouseDoubleClick="OpenExamDesign_TextBlock_MouseDoubleClick">
+                    <ContentControl MouseDoubleClick="OpenExam_TextBlock_MouseDoubleClick">
+                        <ContentControl.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Edytuj" Click="EditExam_MenuItem_Click"/>
+                            </ContextMenu>
+                        </ContentControl.ContextMenu>
                         <TextBlock Foreground="Red" Text="{Binding Title}"/>
                     </ContentControl>
                 </DataTemplate>

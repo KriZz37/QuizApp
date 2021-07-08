@@ -47,6 +47,7 @@
                                     <ItemsControl ItemsSource="{Binding Answers}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
+                                                <!-- TODO: Dock panel conditional formating, correct answer -->
                                                 <DockPanel>
                                                     <TextBlock Text="{Binding Title}"/>
                                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -61,7 +62,9 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <Button Content="Dodaj odpowiedź" Click="AddAnswer_Button_Click"/>
+                                    <Button HorizontalAlignment="Left"
+                                            Content="Dodaj odpowiedź"
+                                            Click="AddAnswer_Button_Click"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
