@@ -1,0 +1,5 @@
+Build Action = Resource
+Copy to Output Directory = Copy if newer
+
+Use:
+<Image Source="pack://application:,,,/PROJECT_NAME;component/Resources/font.png"/>

@@ -6,71 +6,143 @@
         xmlns:local="clr-namespace:WSIiZ_WPF.Views"
         xmlns:utils="clr-namespace:WSIiZ_WPF.Utilities"
         mc:Ignorable="d"
-        Title="ExamDesignWindow" Height="450" Width="800">
+        Title="ExamDesignWindow" Height="830" Width="830">
     <Window.Resources>
         <utils:MockData x:Key="MockData"/>
+
+        <Style x:Key="Hover" TargetType="Grid">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF0F0F0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CorrectAnswer" TargetType="Border">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsCorrect}" Value="true">
+                    <Setter Property="Background" Value="#FFCDFFDC"/>
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Padding" Value="1"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
-    <Grid>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Nazwa egzaminu: "/>
-                <TextBlock Text="{Binding Exam.Title}"/>
+
+    <StackPanel>
+        <Grid Margin="10,0,10,5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="Nazwa egzaminu: "/>
+                <TextBlock FontSize="20" Text="{Binding Exam.Title}" d:Text="Exam name"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="W folderze: "/>
-                <TextBlock Text="{Binding Exam.Folder.Title}"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="W folderze: "/>
+                <TextBlock FontSize="20" Text="{Binding Exam.Folder.Title}" d:Text="Folder name"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Width="200" Text="{Binding QuestionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}"/>
+            <StackPanel Grid.Row="2" Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBox Text="{Binding QuestionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource PlaceHolder}" Tag="Nazwa"
+                         VerticalAlignment="Center" Width="260"
+                         FontSize="17"/>
+                <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}" FontSize="18"/>
             </StackPanel>
-            <StackPanel>
-                <!-- Questions-->
-                <TextBlock Text="Pytania:"/>
+            <TextBlock Grid.Row="2" FontSize="26" Text="Pytania:"/>
+        </Grid>
+        <!-- Questions-->
+        <DockPanel MaxHeight="685">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl
                     d:DataContext="{StaticResource MockData}"
                     ItemsSource="{Binding Questions}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                            <Border>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="BorderBrush" Value="#FFBDBDBD"/>
+                                        <Setter Property="Padding" Value="10"/>
+                                        <Setter Property="Margin" Value="7"/>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
-                                    <DockPanel>
-                                        <TextBlock FontWeight="Bold" Text="{Binding Title}"/>
-                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                            <Button Content="Zmień nazwę" Width="75"
-                                                    Click="ChangeTitle_Button_Click"/>
-                                            <Button Width="50" Content="Usuń" 
-                                                Click="DeleteQuestion_Button_Click"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="85"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontSize="17" FontWeight="Bold" Text="{Binding Title}"
+                                                   Margin="0,0,0,10" TextWrapping="WrapWithOverflow"/>
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                                            <Button Click="ChangeTitle_Button_Click">
+                                                <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/font.png" Width="20"/>
+                                            </Button>
+                                            <Button Click="DeleteQuestion_Button_Click">
+                                                <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/remove.png" Width="20"/>
+                                            </Button>
                                         </StackPanel>
-                                    </DockPanel>
+                                    </Grid>
                                     <!-- Answers-->
                                     <ItemsControl ItemsSource="{Binding Answers}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <!-- TODO: Dock panel conditional formating, correct answer -->
-                                                <DockPanel>
-                                                    <TextBlock Text="{Binding Title}"/>
-                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Button Content="Status" Width="40"
-                                                                Click="ToggleCorrectAnswer_Button_Click"/>
-                                                        <Button Content="Zmień nazwę" Width="75"
-                                                                Click="ChangeTitle_Button_Click"/>
-                                                        <Button Content="Usuń" Width="35"
-                                                                Click="Delete_Answer_Button_Click"/>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="125"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Style="{StaticResource Hover}">
+                                                        <Border Style="{StaticResource CorrectAnswer}">
+                                                            <BulletDecorator>
+                                                                <BulletDecorator.Bullet>
+                                                                    <Ellipse Height="4" Width="4" Fill="#FF555555" Margin="0,2,0,0"/>
+                                                                </BulletDecorator.Bullet>
+                                                                <TextBlock FontSize="16" TextWrapping="WrapWithOverflow" Text="{Binding Title}" Padding="7,0,0,0" Margin="1"/>
+                                                            </BulletDecorator>
+                                                        </Border>
+                                                    </Grid>
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                        <Button Click="ToggleCorrectAnswer_Button_Click">
+                                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/check.png" Width="20"/>
+                                                        </Button>
+                                                        <Button Click="ChangeTitle_Button_Click">
+                                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/font.png" Width="20"/>
+                                                        </Button>
+                                                        <Button Click="Delete_Answer_Button_Click">
+                                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/remove.png" Width="20"/>
+                                                        </Button>
                                                     </StackPanel>
-                                                </DockPanel>
+                                                </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <Button HorizontalAlignment="Left"
-                                            Content="Dodaj odpowiedź"
-                                            Click="AddAnswer_Button_Click"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button HorizontalAlignment="Left"
+                                            Click="AddAnswer_Button_Click"
+                                            Margin="0,7,0,0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image VerticalAlignment="Bottom" Width="20" Source="/Resources/plus.png" Margin="0,0,5,0"/>
+                                                <TextBlock FontSize="16" VerticalAlignment="Center">Dodaj odpowiedź</TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+            </ScrollViewer>
+        </DockPanel>
+    </StackPanel>
 </Window>
