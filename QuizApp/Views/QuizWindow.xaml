@@ -6,48 +6,82 @@
         xmlns:local="clr-namespace:QuizApp.Views"
         xmlns:utils="clr-namespace:QuizApp.Utilities"
         mc:Ignorable="d"
-        Title="" Height="450" Width="800">
+        Title="" Height="870" Width="800"
+        FontSize="18">
     <Window.Resources>
         <utils:MockData x:Key="MockData"/>
     </Window.Resources>
-    
-    <Grid>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
+
+    <StackPanel Margin="5">
+        <!-- Panel -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <TextBlock Text="Nazwa quizu: "/>
                 <TextBlock d:Text="Mock quiz name" Text="{Binding Quiz.Title}"/>
             </StackPanel>
-            <StackPanel>
-                <!-- Questions-->
-                <TextBlock Text="Pytania:"/>
-                <ItemsControl d:DataContext="{StaticResource MockData}"
-                              ItemsSource="{Binding Questions}"
-                              Name="items">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
-                                <StackPanel>
-                                    <TextBlock FontWeight="Bold" Text="{Binding Title}"/>
-                                    <!-- Answers-->
-                                    <ItemsControl ItemsSource="{Binding Answers}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid x:Name="test">
-                                                    <RadioButton Loaded="RadioButton_Loaded" GroupName="{Binding Question.Id}">
-                                                        <TextBlock Text="{Binding Title}"/>
-                                                    </RadioButton>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <Button Content="Sprawdź wynik" Click="Result_Button_Click"/>
-                <TextBlock x:Name="tbResult" Margin="20" FontSize="30"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="W folderze: "/>
+                <TextBlock Text="{Binding Quiz.Folder.Title}" d:Text="Folder name"/>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+        <!-- Questions -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Pytania:" FontSize="26"/>
+            <DockPanel Grid.Row="1" MaxHeight="600">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl
+                          d:DataContext="{StaticResource MockData}"
+                          ItemsSource="{Binding Questions}"
+                          Name="items">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="1"  Padding="5" Margin="0,7,0,7">
+                                    <StackPanel Margin="5">
+                                        <TextBlock Margin="0,0,0,10" TextWrapping="WrapWithOverflow"
+                                                   FontWeight="Bold" Text="{Binding Title}"/>
+                                        <ItemsControl ItemsSource="{Binding Answers}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <RadioButton Margin="0,5,0,0" Loaded="RadioButton_Loaded"
+                                                                     GroupName="{Binding Question.Id}"
+                                                                     VerticalContentAlignment="Center">
+                                                            <TextBlock Margin="2" TextWrapping="WrapWithOverflow"
+                                                                       Text="{Binding Title}"/>
+                                                        </RadioButton>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Grid>
+        <!-- Result -->
+        <Grid Margin="0,20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Sprawdź wynik" Click="Result_Button_Click" 
+                    Background="#FFDBFBD8" BorderBrush="Green" BorderThickness="1"
+                    Padding="0,5,0,5"/>
+            <StackPanel Visibility="Hidden" x:Name="resultBox" Grid.Row="1" Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock Text="Twój wynik to: " FontSize="30"/>
+                <TextBlock x:Name="tbResult" FontSize="30" d:Text="100%"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </Window>

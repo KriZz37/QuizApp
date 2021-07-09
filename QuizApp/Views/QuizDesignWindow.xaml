@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:QuizApp.Views"
         xmlns:utils="clr-namespace:QuizApp.Utilities"
         mc:Ignorable="d"
-        Title="" Height="830" Width="830">
+        Title="" Height="830" Width="830"
+        FontSize="18">
     <Window.Resources>
         <utils:MockData x:Key="MockData"/>
 
@@ -41,21 +42,20 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock FontSize="20" Text="Nazwa quizu: "/>
-                <TextBlock FontSize="20" Text="{Binding Quiz.Title}" d:Text="Quiz name"/>
+                <TextBlock Text="Nazwa quizu: "/>
+                <TextBlock Text="{Binding Quiz.Title}" d:Text="Quiz name"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock FontSize="20" Text="W folderze: "/>
-                <TextBlock FontSize="20" Text="{Binding Quiz.Folder.Title}" d:Text="Folder name"/>
+                <TextBlock Text="W folderze: "/>
+                <TextBlock Text="{Binding Quiz.Folder.Title}" d:Text="Folder name"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <TextBox Text="{Binding QuestionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Tag="Nazwa" Style="{StaticResource Placeholder}" Height="30"
-                         VerticalAlignment="Center" Width="260"
-                         FontSize="17"/>
-                <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}" FontSize="18"/>
+                         VerticalAlignment="Center" Width="260"/>
+                <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}"/>
             </StackPanel>
             <TextBlock Grid.Row="2" FontSize="26" Text="Pytania:"/>
         </Grid>
@@ -82,7 +82,7 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="85"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" FontSize="17" FontWeight="Bold" Text="{Binding Title}"
+                                        <TextBlock Grid.Column="0" FontWeight="Bold" Text="{Binding Title}"
                                                    Margin="0,0,0,10" TextWrapping="WrapWithOverflow"/>
                                         <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                                             <Button Click="ChangeTitle_Button_Click">

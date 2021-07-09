@@ -40,6 +40,12 @@ namespace QuizApp.Views
 
         private void Result_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Questions.Count == 0)
+            {
+                MessageBox.Show("Quiz nie zawiera pytań!");
+                return;
+            }
+
             var checkedRadioButtons = _list.Where(x => x.IsChecked == true);
 
             List<Answer> checkedAnswers = new();
@@ -51,10 +57,11 @@ namespace QuizApp.Views
 
             var correctChecked = checkedAnswers.Where(a => a.Question.CorrectAnswerId == a.Id);
 
-            // TODO: dive zero, no questions
             var result = (decimal)correctChecked.Count() / Questions.Count * 100;
             var roundResult = Math.Round(result, 2);
             tbResult.Text = roundResult + "%";
+
+            resultBox.Visibility = Visibility.Visible;
         }
     }
 }
