@@ -1,10 +1,10 @@
-﻿<Window x:Class="WSIiZ_WPF.Views.QuizDesignWindow"
+﻿<Window x:Class="QuizApp.Views.QuizDesignWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WSIiZ_WPF.Views"
-        xmlns:utils="clr-namespace:WSIiZ_WPF.Utilities"
+        xmlns:local="clr-namespace:QuizApp.Views"
+        xmlns:utils="clr-namespace:QuizApp.Utilities"
         mc:Ignorable="d"
         Title="" Height="830" Width="830">
     <Window.Resources>
@@ -86,10 +86,10 @@
                                                    Margin="0,0,0,10" TextWrapping="WrapWithOverflow"/>
                                         <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                                             <Button Click="ChangeTitle_Button_Click">
-                                                <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/font.png" Width="20"/>
+                                                <Image Source="pack://application:,,,/QuizApp;component/Resources/font.png" Width="20"/>
                                             </Button>
                                             <Button Click="DeleteQuestion_Button_Click">
-                                                <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/remove.png" Width="20"/>
+                                                <Image Source="pack://application:,,,/QuizApp;component/Resources/remove.png" Width="20"/>
                                             </Button>
                                         </StackPanel>
                                     </Grid>
@@ -114,13 +114,13 @@
                                                     </Grid>
                                                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                                                         <Button Click="ToggleCorrectAnswer_Button_Click">
-                                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/check.png" Width="20"/>
+                                                            <Image Source="pack://application:,,,/QuizApp;component/Resources/check.png" Width="20"/>
                                                         </Button>
                                                         <Button Click="ChangeTitle_Button_Click">
-                                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/font.png" Width="20"/>
+                                                            <Image Source="pack://application:,,,/QuizApp;component/Resources/font.png" Width="20"/>
                                                         </Button>
                                                         <Button Click="Delete_Answer_Button_Click">
-                                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/remove.png" Width="20"/>
+                                                            <Image Source="pack://application:,,,/QuizApp;component/Resources/remove.png" Width="20"/>
                                                         </Button>
                                                     </StackPanel>
                                                 </Grid>

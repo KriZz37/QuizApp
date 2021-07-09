@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WSIiZ_WPF.Data;
-using WSIiZ_WPF.Entities.Interfaces;
+using QuizApp.Data;
+using QuizApp.Entities.Interfaces;
 
-namespace WSIiZ_WPF.Services
+namespace QuizApp.Services
 {
     /// <summary>
     /// Contains methods used only by derived services

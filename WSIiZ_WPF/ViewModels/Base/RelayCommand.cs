@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace WSIiZ_WPF.ViewModels
+namespace QuizApp.ViewModels
 {
     public class RelayCommand : ICommand
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WSIiZ_WPF.Data;
+using QuizApp.Data;
 
-namespace WSIiZ_WPF.Services
+namespace QuizApp.Services
 {
     public class DataService : BaseService
     {

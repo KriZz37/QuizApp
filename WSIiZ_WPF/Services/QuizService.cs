@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WSIiZ_WPF.Data;
-using WSIiZ_WPF.Entities;
+using QuizApp.Data;
+using QuizApp.Entities;
 
-namespace WSIiZ_WPF.Services
+namespace QuizApp.Services
 {
     public class QuizService : BaseService
     {

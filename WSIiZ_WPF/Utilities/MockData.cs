@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WSIiZ_WPF.Entities;
+using QuizApp.Entities;
 
-namespace WSIiZ_WPF.Utilities
+namespace QuizApp.Utilities
 {
     public class MockData
     {

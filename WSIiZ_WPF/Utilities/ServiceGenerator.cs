@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using WSIiZ_WPF.ViewModels;
+using QuizApp.ViewModels;
 
-namespace WSIiZ_WPF.Utilities
+namespace QuizApp.Utilities
 {
     public interface IActivable
     {

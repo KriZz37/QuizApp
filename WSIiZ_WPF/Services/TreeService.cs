@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WSIiZ_WPF.Data;
-using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Entities.Interfaces;
+using QuizApp.Data;
+using QuizApp.Entities;
+using QuizApp.Entities.Interfaces;
 
-namespace WSIiZ_WPF.Services
+namespace QuizApp.Services
 {
     /// <summary>
     /// Responsible for operations performed in TreeWindow TreeView

@@ -8,13 +8,13 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using WSIiZ_WPF.Data;
-using WSIiZ_WPF.Services;
-using WSIiZ_WPF.ViewModels;
-using WSIiZ_WPF.Views;
-using WSIiZ_WPF.Utilities;
+using QuizApp.Data;
+using QuizApp.Services;
+using QuizApp.ViewModels;
+using QuizApp.Views;
+using QuizApp.Utilities;
 
-namespace WSIiZ_WPF
+namespace QuizApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

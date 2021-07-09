@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WSIiZ_WPF.Entities.Interfaces;
+using QuizApp.Entities.Interfaces;
 
-namespace WSIiZ_WPF.Entities
+namespace QuizApp.Entities
 {
     public class Quiz : Entity, ITreeItem
     {

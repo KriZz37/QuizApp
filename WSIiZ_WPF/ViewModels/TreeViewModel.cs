@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Entities.Interfaces;
-using WSIiZ_WPF.Services;
-using WSIiZ_WPF.Utilities;
-using WSIiZ_WPF.Views;
+using QuizApp.Entities;
+using QuizApp.Entities.Interfaces;
+using QuizApp.Services;
+using QuizApp.Utilities;
+using QuizApp.Views;
 
-namespace WSIiZ_WPF.ViewModels
+namespace QuizApp.ViewModels
 {
     public class TreeViewModel : BaseViewModel
     {

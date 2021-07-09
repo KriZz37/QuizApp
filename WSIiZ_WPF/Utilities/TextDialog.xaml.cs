@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WSIiZ_WPF.Utilities
+namespace QuizApp.Utilities
 {
     /// <summary>
     /// Interaction logic for TextDialog.xaml

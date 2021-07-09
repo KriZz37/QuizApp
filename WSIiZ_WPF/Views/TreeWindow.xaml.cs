@@ -14,14 +14,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WSIiZ_WPF.Data;
-using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Entities.Interfaces;
-using WSIiZ_WPF.Utilities;
-using WSIiZ_WPF.Services;
-using WSIiZ_WPF.ViewModels;
+using QuizApp.Data;
+using QuizApp.Entities;
+using QuizApp.Entities.Interfaces;
+using QuizApp.Utilities;
+using QuizApp.Services;
+using QuizApp.ViewModels;
 
-namespace WSIiZ_WPF.Views
+namespace QuizApp.Views
 {
     /// <summary>
     /// Interaction logic for TreeWindow.xaml

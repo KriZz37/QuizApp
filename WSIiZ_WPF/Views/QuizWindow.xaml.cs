@@ -11,9 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WSIiZ_WPF.Entities;
+using QuizApp.Entities;
 
-namespace WSIiZ_WPF.Views
+namespace QuizApp.Views
 {
     /// <summary>
     /// Interaction logic for QuizWindow.xaml

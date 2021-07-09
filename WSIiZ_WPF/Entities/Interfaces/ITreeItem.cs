@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WSIiZ_WPF.Entities.Interfaces
+namespace QuizApp.Entities.Interfaces
 {
     public interface ITreeItem : IHasTitle
     {

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Entities.Interfaces;
-using WSIiZ_WPF.Services;
-using WSIiZ_WPF.Utilities;
+using QuizApp.Entities;
+using QuizApp.Entities.Interfaces;
+using QuizApp.Services;
+using QuizApp.Utilities;
 
-namespace WSIiZ_WPF.ViewModels
+namespace QuizApp.ViewModels
 {
     public class QuizDesignViewModel : BaseViewModel, IActivable
     {

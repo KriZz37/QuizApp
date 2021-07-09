@@ -13,13 +13,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WSIiZ_WPF.Entities;
-using WSIiZ_WPF.Entities.Interfaces;
-using WSIiZ_WPF.Services;
-using WSIiZ_WPF.Utilities;
-using WSIiZ_WPF.ViewModels;
+using QuizApp.Entities;
+using QuizApp.Entities.Interfaces;
+using QuizApp.Services;
+using QuizApp.Utilities;
+using QuizApp.ViewModels;
 
-namespace WSIiZ_WPF.Views
+namespace QuizApp.Views
 {
     /// <summary>
     /// Interaction logic for QuizDesignWindow.xaml
