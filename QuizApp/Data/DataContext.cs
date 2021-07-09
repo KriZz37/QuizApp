@@ -8,6 +8,10 @@ using QuizApp.Entities;
 
 namespace QuizApp.Data
 {
+    /// <summary>
+    /// Database context, DbSets represent database tables,
+    /// they can extract information from the database e.g. with LINQ.
+    /// </summary>
     public class DataContext : DbContext
     {
         public DbSet<Folder> Folders { get; set; }
@@ -17,6 +21,9 @@ namespace QuizApp.Data
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
+        /// <summary>
+        /// Configures created entities.
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

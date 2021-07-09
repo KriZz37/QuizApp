@@ -9,10 +9,13 @@ namespace QuizApp.Services
 {
     public class DataService : BaseService
     {
+        /// <summary>
+        /// Database service.
+        /// </summary>
         public DataService(DataContext dataContext) : base(dataContext) { }
 
         /// <summary>
-        /// Creates a .db file if doesn't exist
+        /// Creates a .db file if doesn't exist.
         /// </summary>
         public void EnsureDbCreated()
         {
@@ -20,7 +23,7 @@ namespace QuizApp.Services
         }
 
         /// <summary>
-        /// Clean up database connections
+        /// Clean up database connections.
         /// </summary>
         public void Dispose()
         {

@@ -7,6 +7,10 @@ using QuizApp.Entities;
 
 namespace QuizApp.Utilities
 {
+    /// <summary>
+    /// Mock data used only for XAML design view,
+    /// simulates real data from a database.
+    /// </summary>
     public class MockData
     {
         public List<Question> Questions

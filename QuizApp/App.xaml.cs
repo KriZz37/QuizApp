@@ -25,6 +25,9 @@ namespace QuizApp
         private IConfiguration _configuration;
         private DataService _dataService;
 
+        /// <summary>
+        /// Method called when the application is starting
+        /// </summary>
         protected override void OnStartup(StartupEventArgs e)
         {
             var builder = new ConfigurationBuilder()
@@ -43,6 +46,10 @@ namespace QuizApp
             serviceGenerator.ShowWindow<TreeWindow>();
         }
 
+        /// <summary>
+        /// Register services
+        /// </summary>
+        /// <param name="services">ServiceCollection</param>
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options =>
@@ -62,6 +69,9 @@ namespace QuizApp
             services.AddTransient<QuizService>();
         }
 
+        /// <summary>
+        /// Method called when exiting the application.
+        /// </summary>
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);

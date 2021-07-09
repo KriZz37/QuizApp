@@ -9,6 +9,10 @@ using System.Windows;
 
 namespace QuizApp.ViewModels
 {
+    /// <summary>
+    /// Base for all ViewModels, imprements INotifyPropertyChanged,
+    /// also includes common methods used by ViewModels.
+    /// </summary>
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

@@ -9,6 +9,9 @@ using QuizApp.Entities;
 
 namespace QuizApp.Services
 {
+    /// <summary>
+    /// Service used by quiz Windows and ViewModels.
+    /// </summary>
     public class QuizService : BaseService
     {
         public QuizService(DataContext dataContext) : base(dataContext) { }

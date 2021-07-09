@@ -13,6 +13,10 @@ namespace QuizApp.Utilities
         void Activate(object paramater);
     }
 
+    /// <summary>
+    /// Generates Windows and ViewModels that require a service
+    /// injected in constructor (Dependency Injection).
+    /// </summary>
     public class ServiceGenerator
     {
         private readonly IServiceProvider _serviceProvider;

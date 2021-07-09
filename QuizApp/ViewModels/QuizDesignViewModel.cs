@@ -12,6 +12,9 @@ using QuizApp.Utilities;
 
 namespace QuizApp.ViewModels
 {
+    /// <summary>
+    /// QuizDesignWindow ViewModel
+    /// </summary>
     public class QuizDesignViewModel : BaseViewModel, IActivable
     {
         public Quiz Quiz { get; set; }

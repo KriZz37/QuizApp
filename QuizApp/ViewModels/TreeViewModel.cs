@@ -15,6 +15,9 @@ using QuizApp.Views;
 
 namespace QuizApp.ViewModels
 {
+    /// <summary>
+    /// TreeWindow ViewModel
+    /// </summary>
     public class TreeViewModel : BaseViewModel
     {
         private readonly TreeService _treeService;

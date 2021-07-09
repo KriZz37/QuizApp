@@ -42,6 +42,9 @@ namespace QuizApp.Views
             DataContext = this;
         }
 
+        /// <summary>
+        /// Register all radio buttons.
+        /// </summary>
         private void RadioButton_Loaded(object sender, RoutedEventArgs e)
         {
             _list.Add(sender as RadioButton);
