@@ -46,7 +46,7 @@ namespace QuizApp.Views
         private void OpenQuiz_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var quiz = (sender as ContentControl).DataContext as Quiz;
-            new QuizWindow(quiz).Show();
+            _serviceGenerator.ShowWindow<QuizWindow>(quiz);
         }
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)

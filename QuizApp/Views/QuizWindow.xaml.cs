@@ -12,27 +12,36 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using QuizApp.Entities;
+using QuizApp.Services;
+using QuizApp.Utilities;
 
 namespace QuizApp.Views
 {
     /// <summary>
     /// Interaction logic for QuizWindow.xaml
     /// </summary>
-    public partial class QuizWindow : Window
+    public partial class QuizWindow : Window, IActivable
     {
-        public Quiz Quiz { get; }
-        public List<Question> Questions { get; }
+        public Quiz Quiz { get; private set; }
+        public List<Question> Questions { get; private set; }
 
         private readonly List<RadioButton> _list = new();
+        private readonly QuizService _quizService;
 
-        public QuizWindow(Quiz quiz)
+        public QuizWindow(QuizService quizService)
         {
-            Quiz = quiz;
-            Questions = quiz.Questions;
-            DataContext = this;
+            _quizService = quizService;
 
             InitializeComponent();
         }
+
+        public void Activate(object paramater)
+        {
+            Quiz = paramater as Quiz;
+            Questions = Quiz.Questions;
+            DataContext = this;
+        }
+
         private void RadioButton_Loaded(object sender, RoutedEventArgs e)
         {
             _list.Add(sender as RadioButton);
@@ -55,11 +64,10 @@ namespace QuizApp.Views
                 checkedAnswers.Add(answer);
             }
 
-            var correctChecked = checkedAnswers.Where(a => a.Question.CorrectAnswerId == a.Id);
+            var correctCheckedCount = checkedAnswers.Where(a => a.Question.CorrectAnswerId == a.Id).Count();
 
-            var result = (decimal)correctChecked.Count() / Questions.Count * 100;
-            var roundResult = Math.Round(result, 2);
-            tbResult.Text = roundResult + "%";
+            var result = _quizService.CalculateResult(correctCheckedCount, Questions.Count);
+            tbResult.Text = result + "%";
 
             resultBox.Visibility = Visibility.Visible;
         }

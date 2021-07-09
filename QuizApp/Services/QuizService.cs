@@ -59,5 +59,15 @@ namespace QuizApp.Services
             answer.Question.CorrectAnswerId = answer.Id;
             SaveChanges();
         }
+
+        public decimal CalculateResult(int correctCheckedCount, int questionCount)
+        {
+            if (questionCount == 0) return -1;
+
+            var result = (decimal)correctCheckedCount / questionCount * 100;
+            var roundResult = Math.Round(result, 2);
+
+            return roundResult;
+        }
     }
 }
