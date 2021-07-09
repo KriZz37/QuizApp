@@ -52,7 +52,7 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <TextBox Text="{Binding QuestionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource PlaceHolder}" Tag="Nazwa"
+                         Tag="Nazwa" Style="{StaticResource Placeholder}" Height="30"
                          VerticalAlignment="Center" Width="260"
                          FontSize="17"/>
                 <Button Content="Dodaj pytanie" Command="{Binding AddQuestionCmd}" FontSize="18"/>

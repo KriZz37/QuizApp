@@ -14,6 +14,9 @@
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="Resources\check.png" />
+    <None Remove="Resources\file.png" />
+    <None Remove="Resources\folder-closed.png" />
+    <None Remove="Resources\folder-open.png" />
     <None Remove="Resources\font.png" />
     <None Remove="Resources\plus.png" />
     <None Remove="Resources\remove.png" />
@@ -34,6 +37,15 @@
 
   <ItemGroup>
     <Resource Include="Resources\check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\folder-closed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\folder-open.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\font.png">

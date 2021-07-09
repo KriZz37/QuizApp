@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WSIiZ_WPF">
     <Application.Resources>
-        <Style TargetType="Window">
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-        
-        <Style x:Key="PlaceHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Style x:Key="Placeholder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Margin" Value="2,0,2,0"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
+                        <ControlTemplate.Resources>
+                        </ControlTemplate.Resources>
                         <Grid>
                             <TextBox Text="{Binding Path=Text,
                                                 RelativeSource={RelativeSource TemplatedParent}, 
@@ -18,7 +18,13 @@
                                                 UpdateSourceTrigger=PropertyChanged}"
                                  x:Name="textSource" 
                                  Background="Transparent" 
-                                 Panel.ZIndex="2" />
+                                 Panel.ZIndex="2">
+                                <TextBox.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="4"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
                             <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
                                 <TextBox.Style>
                                     <Style TargetType="{x:Type TextBox}">
@@ -30,6 +36,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
+                                <TextBox.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="4"/>
+                                    </Style>
+                                </TextBox.Resources>
                             </TextBox>
                         </Grid>
                     </ControlTemplate>
@@ -43,7 +54,7 @@
             <Setter Property="Padding" Value="10,1,10,3"/>
             <Style.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="CornerRadius" Value="6"/>
                 </Style>
             </Style.Resources>
         </Style>

@@ -32,6 +32,9 @@ namespace WSIiZ_WPF.Data
 
             modelBuilder.Entity<Answer>()
                 .Ignore(x => x.IsCorrect);
+
+            modelBuilder.Entity<Folder>()
+                .Ignore(x => x.IsExpanded);
         }
     }
 }

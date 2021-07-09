@@ -5,49 +5,131 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSIiZ_WPF"
         xmlns:entities="clr-namespace:WSIiZ_WPF.Entities"
+        xmlns:utils="clr-namespace:WSIiZ_WPF.Utilities"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
+    <Window.Resources>
+        <utils:MockData x:Key="MockData"/>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Width="100" Height="20" Command="{Binding DeleteTreeItemCmd}">Usuń</Button>
-            <StackPanel>
-                <Button Width="100" Height="20" Command="{Binding AddTreeFolderCmd}">Dodaj folder</Button>
-                <TextBox Text="{Binding NewFolderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Style x:Key="TextButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="29"/>
+        </Style>
+
+        <Style x:Key="PanelMargin" TargetType="StackPanel">
+            <Setter Property="Margin" Value="3,0,3,0"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel Margin="5">
+        <!-- Menu -->
+        <Grid DockPanel.Dock="Top" Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Style="{StaticResource PanelMargin}">
+                <Button Style="{StaticResource TextButton}" Command="{Binding AddTreeFolderCmd}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image VerticalAlignment="Bottom" Width="20" Source="/Resources/plus.png" Margin="0,0,5,0"/>
+                        <TextBlock FontSize="16" VerticalAlignment="Center">Dodaj folder</TextBlock>
+                    </StackPanel>
+                </Button>
+                <TextBox Text="{Binding NewFolderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Tag="Nazwa" Style="{StaticResource Placeholder}"/>
             </StackPanel>
-            <StackPanel>
-                <Button Width="100" Height="20" Command="{Binding AddExamCmd}">Dodaj egzamin</Button>
-                <TextBox Text="{Binding NewExamName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Grid.Column="1" Style="{StaticResource PanelMargin}">
+                <Button Style="{StaticResource TextButton}" Command="{Binding AddExamCmd}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image VerticalAlignment="Bottom" Width="20" Source="/Resources/plus.png" Margin="0,0,5,0"/>
+                        <TextBlock FontSize="16" VerticalAlignment="Center">Dodaj egzamin</TextBlock>
+                    </StackPanel>
+                </Button>
+                <TextBox Text="{Binding NewExamName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Tag="Nazwa" Style="{StaticResource Placeholder}">
+                </TextBox>
             </StackPanel>
-            <StackPanel>
-                <Button Width="100" Height="20" Command="{Binding ChangeTreeItemNameCmd}">Zmień nazwę</Button>
-                <TextBox Text="{Binding TreeItemNameToChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Grid.Column="2" Style="{StaticResource PanelMargin}">
+                <Button Style="{StaticResource TextButton}" Command="{Binding ChangeTreeItemNameCmd}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image VerticalAlignment="Bottom" Width="20" Source="/Resources/font.png" Margin="0,0,5,0"/>
+                        <TextBlock FontSize="16" VerticalAlignment="Center">Zmień nazwę</TextBlock>
+                    </StackPanel>
+                </Button>
+                <TextBox Text="{Binding TreeItemNameToChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Tag="Nazwa" Style="{StaticResource Placeholder}"/>
             </StackPanel>
-        </StackPanel>
-        <TreeView Name="FolderTreeView"
-                  ItemsSource="{Binding TreeFolders}"
-                  MouseDown="DeselectItem_TreeView_MouseDown" Grid.Row="1" 
-                  TreeViewItem.Selected="AddTag_TreeView_Selected"
-                  SelectedItemChanged="TreeView_SelectedItemChanged">
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding SubfoldersWithExams}">
-                    <TextBlock Text="{Binding Title}"/>
-                </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type entities:Exam}">
-                    <ContentControl MouseDoubleClick="OpenExam_TextBlock_MouseDoubleClick">
-                        <ContentControl.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Edytuj" Click="EditExam_MenuItem_Click"/>
-                            </ContextMenu>
-                        </ContentControl.ContextMenu>
-                        <TextBlock Foreground="Red" Text="{Binding Title}"/>
-                    </ContentControl>
-                </DataTemplate>
-            </TreeView.Resources>
-        </TreeView>
-    </Grid>
+            <Button Style="{StaticResource TextButton}" Grid.Column="3" Command="{Binding DeleteTreeItemCmd}" Margin="0,3,0,3">
+                <StackPanel Orientation="Horizontal">
+                    <Image VerticalAlignment="Bottom" Width="20" Source="/Resources/remove.png" Margin="0,0,5,0"/>
+                    <TextBlock FontSize="16" VerticalAlignment="Center">Usuń</TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <!-- Tree -->
+        <Grid>
+            <TreeView Name="FolderTreeView"
+                      Grid.Row="1" 
+                      d:DataContext="{StaticResource MockData}" Padding="10"
+                      ItemsSource="{Binding TreeFolders}"
+                      MouseDown="DeselectItem_TreeView_MouseDown" 
+                      TreeViewItem.Selected="AddTag_TreeView_Selected"
+                      SelectedItemChanged="TreeView_SelectedItemChanged">
+                <d:TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="True"/>
+                    </Style>
+                </d:TreeView.ItemContainerStyle>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Style.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="2"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding SubfoldersWithExams}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="folderImg" Source="pack://application:,,,/WSIiZ_WPF;component/Resources/folder-closed.png" Width="18"/>
+                            <TextBlock Margin="2" Text="{Binding Title}"/>
+                        </StackPanel>
+                        <HierarchicalDataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                <Setter TargetName="folderImg"
+                                        Property="Source"
+                                        Value="pack://application:,,,/WSIiZ_WPF;component/Resources/folder-open.png"/>
+                            </DataTrigger>
+                        </HierarchicalDataTemplate.Triggers>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type entities:Exam}">
+                        <ContentControl MouseDoubleClick="OpenExam_TextBlock_MouseDoubleClick">
+                            <ContentControl.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Edytuj" Click="EditExam_MenuItem_Click"/>
+                                </ContextMenu>
+                            </ContentControl.ContextMenu>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/file.png" Width="18"/>
+                                <TextBlock Margin="2" Text="{Binding Title}"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </DataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+        </Grid>
+    </DockPanel>
 </Window>

@@ -20,5 +20,8 @@ namespace WSIiZ_WPF.Entities
         {
             get => Subfolders.Concat<ITreeItem>(Exams);
         }
+
+        // Folder image
+        public bool IsExpanded { get; set; }
     }
 }
