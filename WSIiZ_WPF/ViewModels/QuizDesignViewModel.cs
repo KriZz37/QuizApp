@@ -12,22 +12,22 @@ using WSIiZ_WPF.Utilities;
 
 namespace WSIiZ_WPF.ViewModels
 {
-    public class ExamDesignViewModel : BaseViewModel, IActivable
+    public class QuizDesignViewModel : BaseViewModel, IActivable
     {
-        public Exam Exam { get; set; }
-        private readonly ExaminationService _examinationService;
+        public Quiz Quiz { get; set; }
+        private readonly QuizService _qizzService;
 
-        public ExamDesignViewModel(ExaminationService examinationService)
+        public QuizDesignViewModel(QuizService quizService)
         {
-            _examinationService = examinationService;
+            _qizzService = quizService;
 
             AddQuestionCmd = new RelayCommand(c => AddQuestion());
         }
 
         public void Activate(object paramater)
         {
-            Exam = paramater as Exam;
-            Questions = new List<Question>(Exam.Questions);
+            Quiz = paramater as Quiz;
+            Questions = new List<Question>(Quiz.Questions);
         }
 
         // Commands
@@ -53,14 +53,14 @@ namespace WSIiZ_WPF.ViewModels
         {
             if (!NameIsValid(QuestionName)) return;
 
-            _examinationService.AddQuestion(Exam, QuestionName);
+            _qizzService.AddQuestion(Quiz, QuestionName);
             QuestionName = string.Empty;
             UpdateQuestions();
         }
 
         public void DeleteQuestion(Question question)
         {
-            _examinationService.DeleteQuestion(question);
+            _qizzService.DeleteQuestion(question);
             UpdateQuestions();
         }
 
@@ -72,19 +72,19 @@ namespace WSIiZ_WPF.ViewModels
             var answer = dialog.ResponseText;
             if (!NameIsValid(answer)) return;
 
-            _examinationService.AddAnswer(question, answer);
+            _qizzService.AddAnswer(question, answer);
             UpdateQuestions();
         }
 
         public void ToggleCorrectAnswer(Answer answer)
         {
-            _examinationService.ToggleCorrectAnswer(answer);
+            _qizzService.ToggleCorrectAnswer(answer);
             UpdateQuestions();
         }
 
         public void DeleteAnswer(Answer answer)
         {
-            _examinationService.DeleteAnswer(answer);
+            _qizzService.DeleteAnswer(answer);
             UpdateQuestions();
         }
 
@@ -96,13 +96,13 @@ namespace WSIiZ_WPF.ViewModels
             var newTitle = dialog.ResponseText;
             if (!NameIsValid(newTitle)) return;
 
-            _examinationService.ChangeTitle(entity, newTitle);
+            _qizzService.ChangeTitle(entity, newTitle);
             UpdateQuestions();
         }
 
         private void UpdateQuestions()
         {
-            Questions = _examinationService.GetQuestions(Exam);
+            Questions = _qizzService.GetQuestions(Quiz);
         }
     }
 }

@@ -51,15 +51,15 @@ namespace WSIiZ_WPF
             services.AddScoped<ServiceGenerator>();
 
             services.AddTransient<TreeWindow>();
-            services.AddTransient<ExamDesignWindow>();
-            services.AddTransient<ExamWindow>();
+            services.AddTransient<QuizDesignWindow>();
+            services.AddTransient<QuizWindow>();
 
             services.AddTransient<TreeViewModel>();
-            services.AddTransient<ExamDesignViewModel>();
+            services.AddTransient<QuizDesignViewModel>();
                                  
             services.AddTransient<TreeService>();
             services.AddTransient<DataService>();
-            services.AddTransient<ExaminationService>();
+            services.AddTransient<QuizService>();
         }
 
         protected override void OnExit(ExitEventArgs e)

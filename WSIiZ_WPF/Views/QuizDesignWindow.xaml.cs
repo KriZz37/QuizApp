@@ -22,14 +22,14 @@ using WSIiZ_WPF.ViewModels;
 namespace WSIiZ_WPF.Views
 {
     /// <summary>
-    /// Interaction logic for ExamDesignWindow.xaml
+    /// Interaction logic for QuizDesignWindow.xaml
     /// </summary>
-    public partial class ExamDesignWindow : Window, IActivable
+    public partial class QuizDesignWindow : Window, IActivable
     {
-        private ExamDesignViewModel _examDesignViewModel;
+        private QuizDesignViewModel _quizDesignViewModel;
         private readonly ServiceGenerator _serviceGenerator;
 
-        public ExamDesignWindow(ServiceGenerator serviceGenerator)
+        public QuizDesignWindow(ServiceGenerator serviceGenerator)
         {
             _serviceGenerator = serviceGenerator;
 
@@ -38,41 +38,41 @@ namespace WSIiZ_WPF.Views
 
         public void Activate(object paramater)
         {
-            var exam = paramater as Exam;
-            _examDesignViewModel = _serviceGenerator.CreateViewModel<ExamDesignViewModel>(exam);
+            var quiz = paramater as Quiz;
+            _quizDesignViewModel = _serviceGenerator.CreateViewModel<QuizDesignViewModel>(quiz);
 
-            DataContext = _examDesignViewModel;
+            DataContext = _quizDesignViewModel;
         }
 
         //TODO: Move methods below to ViewModel
         private void DeleteQuestion_Button_Click(object sender, RoutedEventArgs e)
         {
             var question = (e.OriginalSource as Button).DataContext as Question;
-            _examDesignViewModel.DeleteQuestion(question);
+            _quizDesignViewModel.DeleteQuestion(question);
         }
 
         private void AddAnswer_Button_Click(object sender, RoutedEventArgs e)
         {
             var question = (e.OriginalSource as Button).DataContext as Question;
-            _examDesignViewModel.AddAnswer(question);
+            _quizDesignViewModel.AddAnswer(question);
         }
 
         private void ToggleCorrectAnswer_Button_Click(object sender, RoutedEventArgs e)
         {
             var answer = (e.OriginalSource as Button).DataContext as Answer;
-            _examDesignViewModel.ToggleCorrectAnswer(answer);
+            _quizDesignViewModel.ToggleCorrectAnswer(answer);
         }
 
         private void Delete_Answer_Button_Click(object sender, RoutedEventArgs e)
         {
             var answer = (e.OriginalSource as Button).DataContext as Answer;
-            _examDesignViewModel.DeleteAnswer(answer);
+            _quizDesignViewModel.DeleteAnswer(answer);
         }
 
         private void ChangeTitle_Button_Click(object sender, RoutedEventArgs e)
         {
             var entity = (e.OriginalSource as Button).DataContext as IHasTitle;
-            _examDesignViewModel.ChangeTitle(entity);
+            _quizDesignViewModel.ChangeTitle(entity);
         }
     }
 }

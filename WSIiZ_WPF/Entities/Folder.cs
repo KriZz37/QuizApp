@@ -13,12 +13,12 @@ namespace WSIiZ_WPF.Entities
         public long? ParentId { get; set; }
         public Folder Parent { get; set; }
         public List<Folder> Subfolders { get; set; } = new();
-        public List<Exam> Exams { get; set; } = new();
+        public List<Quiz> Quizzes { get; set; } = new();
 
         // Displays the tree
-        public IEnumerable<ITreeItem> SubfoldersWithExams
+        public IEnumerable<ITreeItem> SubfoldersWithQuizzes
         {
-            get => Subfolders.Concat<ITreeItem>(Exams);
+            get => Subfolders.Concat<ITreeItem>(Quizzes);
         }
 
         // Folder image

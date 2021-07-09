@@ -1,4 +1,4 @@
-﻿<Window x:Class="WSIiZ_WPF.Views.ExamDesignWindow"
+﻿<Window x:Class="WSIiZ_WPF.Views.QuizDesignWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WSIiZ_WPF.Views"
         xmlns:utils="clr-namespace:WSIiZ_WPF.Utilities"
         mc:Ignorable="d"
-        Title="ExamDesignWindow" Height="830" Width="830">
+        Title="" Height="830" Width="830">
     <Window.Resources>
         <utils:MockData x:Key="MockData"/>
 
@@ -41,12 +41,12 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock FontSize="20" Text="Nazwa egzaminu: "/>
-                <TextBlock FontSize="20" Text="{Binding Exam.Title}" d:Text="Exam name"/>
+                <TextBlock FontSize="20" Text="Nazwa quizu: "/>
+                <TextBlock FontSize="20" Text="{Binding Quiz.Title}" d:Text="Quiz name"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock FontSize="20" Text="W folderze: "/>
-                <TextBlock FontSize="20" Text="{Binding Exam.Folder.Title}" d:Text="Folder name"/>
+                <TextBlock FontSize="20" Text="{Binding Quiz.Folder.Title}" d:Text="Folder name"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="1"
                         Orientation="Horizontal"

@@ -16,19 +16,19 @@ using WSIiZ_WPF.Entities;
 namespace WSIiZ_WPF.Views
 {
     /// <summary>
-    /// Interaction logic for ExamWindow.xaml
+    /// Interaction logic for QuizWindow.xaml
     /// </summary>
-    public partial class ExamWindow : Window
+    public partial class QuizWindow : Window
     {
-        public Exam Exam { get; }
+        public Quiz Quiz { get; }
         public List<Question> Questions { get; }
 
         private readonly List<RadioButton> _list = new();
 
-        public ExamWindow(Exam exam)
+        public QuizWindow(Quiz quiz)
         {
-            Exam = exam;
-            Questions = exam.Questions;
+            Quiz = quiz;
+            Questions = quiz.Questions;
             DataContext = this;
 
             InitializeComponent();

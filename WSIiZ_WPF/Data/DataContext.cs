@@ -11,7 +11,7 @@ namespace WSIiZ_WPF.Data
     public class DataContext : DbContext
     {
         public DbSet<Folder> Folders { get; set; }
-        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
 
@@ -28,7 +28,7 @@ namespace WSIiZ_WPF.Data
 
             // Ignore helpers
             modelBuilder.Entity<Folder>()
-                .Ignore(x => x.SubfoldersWithExams);
+                .Ignore(x => x.SubfoldersWithQuizzes);
 
             modelBuilder.Entity<Answer>()
                 .Ignore(x => x.IsCorrect);

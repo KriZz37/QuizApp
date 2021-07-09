@@ -43,10 +43,10 @@ namespace WSIiZ_WPF.Views
         }
 
         //TODO: Move methods below to ViewModel
-        private void OpenExam_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OpenQuiz_TextBlock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var exam = (e.OriginalSource as TextBlock).DataContext as Exam;
-            new ExamWindow(exam).Show();
+            var quiz = (sender as ContentControl).DataContext as Quiz;
+            new QuizWindow(quiz).Show();
         }
 
         private void DeselectItem_TreeView_MouseDown(object sender, MouseButtonEventArgs e)
@@ -69,10 +69,10 @@ namespace WSIiZ_WPF.Views
             _treeViewModel.SelectedItem = e.NewValue as ITreeItem;
         }
 
-        private void EditExam_MenuItem_Click(object sender, RoutedEventArgs e)
+        private void EditQuiz_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var exam = (sender as MenuItem).DataContext as Exam;
-            _serviceGenerator.ShowWindow<ExamDesignWindow>(exam);
+            var quiz = (sender as MenuItem).DataContext as Quiz;
+            _serviceGenerator.ShowWindow<QuizDesignWindow>(quiz);
         }
     }
 }

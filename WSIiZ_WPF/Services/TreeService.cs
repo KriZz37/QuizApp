@@ -11,7 +11,7 @@ namespace WSIiZ_WPF.Services
 {
     /// <summary>
     /// Responsible for operations performed in TreeWindow TreeView
-    /// to the database (folders and exams)
+    /// to the database (folders and quizzes)
     /// </summary>
     public class TreeService : BaseService
     {
@@ -21,7 +21,7 @@ namespace WSIiZ_WPF.Services
         {
             // Get whole tree
             return _dataContext.Folders
-                .Include(x => x.Exams)
+                .Include(x => x.Quizzes)
                 .ThenInclude(x => x.Questions)
                 .ThenInclude(x => x.Answers)
                 .AsEnumerable()
@@ -53,10 +53,10 @@ namespace WSIiZ_WPF.Services
             SaveChanges();
         }
 
-        public void AddExam(Folder selectedItem, string name)
+        public void AddQuiz(Folder selectedItem, string name)
         {
-            _dataContext.Exams.Add(
-                new Exam
+            _dataContext.Quizzes.Add(
+                new Quiz
                 {
                     Title = name,
                     Folder = selectedItem
@@ -70,11 +70,11 @@ namespace WSIiZ_WPF.Services
             if (selectedItem is Folder folder)
             {
                 var folders = FlattenSubfolders(folder);
-                // It also deletes exams (cascade delete)
+                // It also deletes quizzes with questions and answers (cascade delete)
                 _dataContext.RemoveRange(folders);
             }
 
-            if (selectedItem is Exam)
+            if (selectedItem is Quiz)
                 _dataContext.Remove(selectedItem);
 
             SaveChanges();

@@ -44,13 +44,13 @@
                          Tag="Nazwa" Style="{StaticResource Placeholder}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Style="{StaticResource PanelMargin}">
-                <Button Style="{StaticResource TextButton}" Command="{Binding AddExamCmd}">
+                <Button Style="{StaticResource TextButton}" Command="{Binding AddQuizCmd}">
                     <StackPanel Orientation="Horizontal">
                         <Image VerticalAlignment="Bottom" Width="20" Source="/Resources/plus.png" Margin="0,0,5,0"/>
-                        <TextBlock FontSize="16" VerticalAlignment="Center">Dodaj egzamin</TextBlock>
+                        <TextBlock FontSize="16" VerticalAlignment="Center">Dodaj quiz</TextBlock>
                     </StackPanel>
                 </Button>
-                <TextBox Text="{Binding NewExamName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox Text="{Binding NewQuizName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Tag="Nazwa" Style="{StaticResource Placeholder}">
                 </TextBox>
             </StackPanel>
@@ -102,7 +102,7 @@
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding SubfoldersWithExams}">
+                    <HierarchicalDataTemplate DataType="{x:Type entities:Folder}" ItemsSource="{Binding SubfoldersWithQuizzes}">
                         <StackPanel Orientation="Horizontal">
                             <Image x:Name="folderImg" Source="pack://application:,,,/WSIiZ_WPF;component/Resources/folder-closed.png" Width="18"/>
                             <TextBlock Margin="2" Text="{Binding Title}"/>
@@ -115,11 +115,15 @@
                             </DataTrigger>
                         </HierarchicalDataTemplate.Triggers>
                     </HierarchicalDataTemplate>
-                    <DataTemplate DataType="{x:Type entities:Exam}">
-                        <ContentControl MouseDoubleClick="OpenExam_TextBlock_MouseDoubleClick">
+                    <DataTemplate DataType="{x:Type entities:Quiz}">
+                        <ContentControl MouseDoubleClick="OpenQuiz_TextBlock_MouseDoubleClick">
                             <ContentControl.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Edytuj" Click="EditExam_MenuItem_Click"/>
+                                    <MenuItem Header="Edytuj" Click="EditQuiz_MenuItem_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="pack://application:,,,/WSIiZ_WPF;component/Resources/edit.png" Width="18"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </ContextMenu>
                             </ContentControl.ContextMenu>
                             <StackPanel Orientation="Horizontal">

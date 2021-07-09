@@ -10,8 +10,8 @@ namespace WSIiZ_WPF.Entities
     public class Question : Entity, IHasTitle
     {
         public string Title { get; set; }
-        public Exam Exam { get; set; }
-        public long ExamId { get; set; }
+        public Quiz Quiz { get; set; }
+        public long QuizId { get; set; }
         public long CorrectAnswerId { get; set; }
         public List<Answer> Answers { get; set; }
     }

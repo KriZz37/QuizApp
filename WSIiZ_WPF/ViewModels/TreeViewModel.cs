@@ -26,7 +26,7 @@ namespace WSIiZ_WPF.ViewModels
 
             DeleteTreeItemCmd = new RelayCommand(c => DeleteTreeItem());
             AddTreeFolderCmd = new RelayCommand(c => AddTreeFolder());
-            AddExamCmd = new RelayCommand(c => AddExam());
+            AddQuizCmd = new RelayCommand(c => AddQuiz());
             ChangeTreeItemNameCmd = new RelayCommand(c => ChangeTreeItemName());
 
             BuildTree();
@@ -35,7 +35,7 @@ namespace WSIiZ_WPF.ViewModels
         // Commands
         public ICommand DeleteTreeItemCmd { get; set; }
         public ICommand AddTreeFolderCmd { get; set; }
-        public ICommand AddExamCmd { get; set; }
+        public ICommand AddQuizCmd { get; set; }
         public ICommand ChangeTreeItemNameCmd { get; set; }
 
         // View properties
@@ -46,11 +46,11 @@ namespace WSIiZ_WPF.ViewModels
             set => OnPropertyChanged(ref _newFolderName, value);
         }
 
-        private string _newExamName;
-        public string NewExamName
+        private string _newQuizName;
+        public string NewQuizName
         {
-            get => _newExamName;
-            set => OnPropertyChanged(ref _newExamName, value);
+            get => _newQuizName;
+            set => OnPropertyChanged(ref _newQuizName, value);
         }
 
         private string _treeItemNameToChange;
@@ -98,20 +98,20 @@ namespace WSIiZ_WPF.ViewModels
             BuildTree();
         }
 
-        private void AddExam()
+        private void AddQuiz()
         {
-            if (!NameIsValid(NewExamName)) return;
+            if (!NameIsValid(NewQuizName)) return;
 
             var selectedFolder = SelectedItem as Folder;
 
             if (SelectedItem is not Folder)
             {
-                MessageBox.Show("Egzamin musi być dodany do folderu", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Quiz musi być dodany do folderu", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            _treeService.AddExam(selectedFolder, NewExamName);
-            NewExamName = string.Empty;
+            _treeService.AddQuiz(selectedFolder, NewQuizName);
+            NewQuizName = string.Empty;
             BuildTree();
         }
 

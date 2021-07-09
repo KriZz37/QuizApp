@@ -83,7 +83,7 @@ namespace WSIiZ_WPF.Utilities
                                     new Folder
                                     {
                                         Title = "1.1.1",
-                                        Exams = new List<Exam> { new Exam { Title = "EXAM 1.1.1" } }
+                                        Quizzes = new List<Quiz> { new Quiz { Title = "QUIZ 1.1.1" } }
                                     }
                                 }
                             },
@@ -95,23 +95,23 @@ namespace WSIiZ_WPF.Utilities
                                     new Folder
                                     {
                                         Title = "1.2.1",
-                                        Exams = new List<Exam> { new Exam { Title = "EXAM 1.2.1" } }
+                                        Quizzes = new List<Quiz> { new Quiz { Title = "QUIZ 1.2.1" } }
                                     },
                                     new Folder
                                     {
                                         Title = "1.3.1",
-                                        Exams = new List<Exam> { new Exam { Title = "EXAM 1.3.1" } },
+                                        Quizzes = new List<Quiz> { new Quiz { Title = "QUIZ 1.3.1" } },
                                         Subfolders = new List<Folder>
                                         {
                                             new Folder
                                             {
                                                 Title = "1.3.1.1",
-                                                Exams = new List<Exam> { new Exam { Title = "EXAM 1.3.1.1" } }
+                                                Quizzes = new List<Quiz> { new Quiz { Title = "QUIZ 1.3.1.1" } }
                                             },
                                             new Folder
                                             {
                                                 Title = "1.3.1.2",
-                                                Exams = new List<Exam> { new Exam { Title = "EXAM 1.3.1.2" } }
+                                                Quizzes = new List<Quiz> { new Quiz { Title = "QUIZ 1.3.1.2" } }
                                             }
                                         }
                                     }
@@ -146,7 +146,7 @@ namespace WSIiZ_WPF.Utilities
                                     new Folder
                                     {
                                         Title = "3.1.3",
-                                        Exams = new List<Exam> { new Exam { Title = "EXAM 3.1.3" } }
+                                        Quizzes = new List<Quiz> { new Quiz { Title = "QUIZ 3.1.3" } }
                                     },
                                     new Folder { Title = "3.1.4" }
                                 }

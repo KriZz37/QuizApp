@@ -7,7 +7,7 @@ using WSIiZ_WPF.Entities.Interfaces;
 
 namespace WSIiZ_WPF.Entities
 {
-    public class Exam : Entity, ITreeItem
+    public class Quiz : Entity, ITreeItem
     {
         public string Title { get; set; }
         public Folder Folder { get; set; }

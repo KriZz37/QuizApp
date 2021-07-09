@@ -9,25 +9,25 @@ using WSIiZ_WPF.Entities;
 
 namespace WSIiZ_WPF.Services
 {
-    public class ExaminationService : BaseService
+    public class QuizService : BaseService
     {
-        public ExaminationService(DataContext dataContext) : base(dataContext) { }
+        public QuizService(DataContext dataContext) : base(dataContext) { }
 
-        public void AddQuestion(Exam exam, string title)
+        public void AddQuestion(Quiz quiz, string title)
         {
             _dataContext.Questions.Add(
                 new Question
                 {
-                    Exam = exam,
+                    Quiz = quiz,
                     Title = title
                 });
 
             SaveChanges();
         }
 
-        public List<Question> GetQuestions(Exam exam)
+        public List<Question> GetQuestions(Quiz quiz)
         {
-            return _dataContext.Questions.Where(x => x.Exam == exam).ToList();
+            return _dataContext.Questions.Where(x => x.Quiz == quiz).ToList();
         }
 
         public void DeleteQuestion(Question question)
