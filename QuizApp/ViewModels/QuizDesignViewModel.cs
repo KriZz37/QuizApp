@@ -18,11 +18,11 @@ namespace QuizApp.ViewModels
     public class QuizDesignViewModel : BaseViewModel, IActivable
     {
         public Quiz Quiz { get; set; }
-        private readonly QuizService _qizzService;
+        private readonly QuizService _quizService;
 
         public QuizDesignViewModel(QuizService quizService)
         {
-            _qizzService = quizService;
+            _quizService = quizService;
 
             AddQuestionCmd = new RelayCommand(c => AddQuestion());
         }
@@ -56,14 +56,14 @@ namespace QuizApp.ViewModels
         {
             if (!NameIsValid(QuestionName)) return;
 
-            _qizzService.AddQuestion(Quiz, QuestionName);
+            _quizService.AddQuestion(Quiz, QuestionName);
             QuestionName = string.Empty;
             UpdateQuestions();
         }
 
         public void DeleteQuestion(Question question)
         {
-            _qizzService.DeleteQuestion(question);
+            _quizService.DeleteQuestion(question);
             UpdateQuestions();
         }
 
@@ -75,19 +75,19 @@ namespace QuizApp.ViewModels
             var answer = dialog.ResponseText;
             if (!NameIsValid(answer)) return;
 
-            _qizzService.AddAnswer(question, answer);
+            _quizService.AddAnswer(question, answer);
             UpdateQuestions();
         }
 
         public void ToggleCorrectAnswer(Answer answer)
         {
-            _qizzService.ToggleCorrectAnswer(answer);
+            _quizService.ToggleCorrectAnswer(answer);
             UpdateQuestions();
         }
 
         public void DeleteAnswer(Answer answer)
         {
-            _qizzService.DeleteAnswer(answer);
+            _quizService.DeleteAnswer(answer);
             UpdateQuestions();
         }
 
@@ -99,13 +99,13 @@ namespace QuizApp.ViewModels
             var newTitle = dialog.ResponseText;
             if (!NameIsValid(newTitle)) return;
 
-            _qizzService.ChangeTitle(entity, newTitle);
+            _quizService.ChangeTitle(entity, newTitle);
             UpdateQuestions();
         }
 
         private void UpdateQuestions()
         {
-            Questions = _qizzService.GetQuestions(Quiz);
+            Questions = _quizService.GetQuestions(Quiz);
         }
     }
 }
