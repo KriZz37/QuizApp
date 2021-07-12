@@ -25,7 +25,7 @@ namespace QuizApp.Views
         public Quiz Quiz { get; private set; }
         public List<Question> Questions { get; private set; }
 
-        private readonly List<RadioButton> _list = new();
+        private readonly List<RadioButton> _radioButtonList = new();
         private readonly QuizService _quizService;
 
         public QuizWindow(QuizService quizService)
@@ -47,7 +47,7 @@ namespace QuizApp.Views
         /// </summary>
         private void RadioButton_Loaded(object sender, RoutedEventArgs e)
         {
-            _list.Add(sender as RadioButton);
+            _radioButtonList.Add(sender as RadioButton);
         }
 
         private void Result_Button_Click(object sender, RoutedEventArgs e)
@@ -58,7 +58,7 @@ namespace QuizApp.Views
                 return;
             }
 
-            var checkedRadioButtons = _list.Where(x => x.IsChecked == true);
+            var checkedRadioButtons = _radioButtonList.Where(x => x.IsChecked == true);
 
             List<Answer> checkedAnswers = new();
             foreach (var radioButton in checkedRadioButtons)

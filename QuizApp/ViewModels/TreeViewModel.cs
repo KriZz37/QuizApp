@@ -95,8 +95,13 @@ namespace QuizApp.ViewModels
         {
             if (!NameIsValid(NewFolderName)) return;
 
-            var selectedFolder = SelectedItem as Folder;
-            _treeService.AddFolder(selectedFolder, NewFolderName);
+            if (SelectedItem is Quiz)
+            {
+                MessageBox.Show("Nie możesz dodać folderu do quizu", "Błąd");
+                return;
+            }
+
+            _treeService.AddFolder(SelectedItem as Folder, NewFolderName);
             NewFolderName = string.Empty;
             BuildTree();
         }
